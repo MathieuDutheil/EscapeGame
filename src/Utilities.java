@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Utilities {
 
     private static Scanner sc = new Scanner(System.in);
+    private static String  newLine = System.getProperty("line.separator");
 
 
     public static int askAnInt(String intro, int lowLimit, int highLimit) {
@@ -36,5 +37,29 @@ public class Utilities {
 
         return (int) (Math.random() * ((max - min) + 1)) + min;
     }
+
+    public static void compareTwoInteger(int firstInteger, int secondInteger) {
+        String a = Integer.toString(firstInteger);
+        String b = Integer.toString(secondInteger);
+        for (int i = 0; i <= (a.length()-1); i++) {
+            compareTwoChar(a.charAt(i),b.charAt(i));
+        }
+        System.out.println(newLine);
+    }
+
+    public static void compareTwoChar(char a, char b) {
+        if (a == b) {
+            System.out.print("=");
+        }
+        if (a > b) {
+            System.out.print("+");
+        }
+        if (a < b) {
+            System.out.print("-");
+        }
+
+    }
+
+
 }
 
