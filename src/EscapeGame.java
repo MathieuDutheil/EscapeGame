@@ -9,10 +9,10 @@ public class EscapeGame {
 
     public void startChallengerMode() {
         System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
-        secretCombination = Utilities.getRandomNumberInRange(1000, 9999);
-        //System.out.println(secretCombination);
+        secretCombination = Utilities.getRandomNumberInRange(0, 100000);
+        System.out.println(secretCombination);
         do {
-            playerGuess = Utilities.askAnInt("Votre choix ?", 1000, 9999);
+            playerGuess = Utilities.askAnInt("Votre choix ?", 0, 100000);
             Utilities.compareTwoInteger(playerGuess,secretCombination);
         } while (playerGuess != secretCombination);
     }
