@@ -1,6 +1,9 @@
+import jdk.jshell.execution.Util;
+
 public class EscapeGame {
     private int gameMode;
-    private int secretCombination;
+    private String secretCombination;
+    private String playerStringGuess;
     private int playerGuess;
 
     public void selectGameMode() {
@@ -9,12 +12,13 @@ public class EscapeGame {
 
     public void startChallengerMode() {
         System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
-        secretCombination = Utilities.getRandomNumberInRange(0, 100000);
+        secretCombination = Utilities.getRandomStringNumberInRange(4);
         System.out.println(secretCombination);
         do {
             playerGuess = Utilities.askAnInt("Votre choix ?", 0, 100000);
-            Utilities.compareTwoInteger(playerGuess,secretCombination);
-        } while (playerGuess != secretCombination);
+            playerStringGuess = Integer.toString(playerGuess);
+            Utilities.compareTwoString(playerStringGuess, secretCombination);
+        } while (!playerStringGuess.equals(secretCombination));
     }
 
     public void startDefenderMode() {
