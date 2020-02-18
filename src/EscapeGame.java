@@ -4,7 +4,8 @@ public class EscapeGame {
     private int gameMode;
     private String secretCombination;
     private String playerStringGuess;
-    private int playerGuess;
+    private String playerGuess;
+    private final static int LENGTH_COMBINATION = 4;
 
     public void selectGameMode() {
         gameMode = Utilities.askAnInt("À quels modes du jeu souhaitez-vous jouer ? (1 : Challenger, 2 : Défenseur, 3 : Duel)", 1, 3);
@@ -12,13 +13,13 @@ public class EscapeGame {
 
     public void startChallengerMode() {
         System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
-        secretCombination = Utilities.getRandomStringNumberInRange(4);
+        secretCombination = Utilities.getRandomStringNumberInRange(LENGTH_COMBINATION);
         System.out.println(secretCombination);
         do {
-            playerGuess = Utilities.askAnInt("Votre choix ?", 0, 100000);
-            playerStringGuess = Integer.toString(playerGuess);
-            Utilities.compareTwoString(playerStringGuess, secretCombination);
-        } while (!playerStringGuess.equals(secretCombination));
+            playerGuess = Utilities.askAStringNumber();
+
+            Utilities.compareTwoString(playerGuess, secretCombination);
+        } while (!playerGuess.equals(secretCombination));
     }
 
     public void startDefenderMode() {
