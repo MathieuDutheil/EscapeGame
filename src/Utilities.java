@@ -7,14 +7,7 @@ public class Utilities {
     private static Scanner sc = new Scanner(System.in);
     private static String newLine = System.getProperty("line.separator");
 
-    public static String getRandomStringNumberInRange(int length) {
-        StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i <= (length - 1); i++) {
-            buffer.append(getRandomNumberInRange(0, 9));
-        }
-        String stringNumber = buffer.toString();
-        return stringNumber;
-    }
+
 
     public static int getRandomNumberInRange(int min, int max) {
 
