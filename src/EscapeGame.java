@@ -31,7 +31,7 @@ public class EscapeGame {
 
     public void startChallengerMode() {
         System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
-        secretCombination = askACombination(LENGTH_COMBINATION);
+        secretCombination = getCombination(LENGTH_COMBINATION);
         System.out.println(secretCombination);
         do {
             playerGuess = Utilities.askAStringNumber();
@@ -47,12 +47,14 @@ public class EscapeGame {
     public void startDualMode() {
 
     }
-    public static String askACombination(int length) {
-        StringBuffer buffer = new StringBuffer();
+
+    public String getCombination(int length) {
+        String combination = new String();
         for (int i = 0; i < length; i++) {
-            buffer.append(Utilities.getRandomNumberInRange(0, 9));
+            combination += Utilities.getRandomNumberInRange(0, 9);
         }
-        return buffer.toString();
+
+        return combination;
     }
 
 
