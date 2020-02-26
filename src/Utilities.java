@@ -3,10 +3,9 @@ import java.util.Scanner;
 
 
 public class Utilities {
-
     private static Scanner sc = new Scanner(System.in);
-    private static String newLine = System.getProperty("line.separator");
 
+    private static String newLine = System.getProperty("line.separator");
 
 
     public static int getRandomNumberInRange(int min, int max) {
@@ -16,36 +15,6 @@ public class Utilities {
         }
 
         return (int) (Math.random() * ((max - min) + 1)) + min;
-    }
-
-
-    public static String askAStringNumber() {
-        String stringNumber;
-        do {
-            stringNumber = sc.nextLine();
-
-        } while (isStringNumericalOutput(stringNumber));
-        return stringNumber;
-    }
-
-    public static boolean isStringNumericalOutput(String stringToTest) {
-        boolean bool = true;
-        try {
-            for (int i = 0; i <= (stringToTest.length() - 1); i++) {
-
-                int i1 = Integer.parseInt(String.valueOf(stringToTest.charAt(i))); //try/catch a rajouter sur NumberFormatException
-
-                if (i1 >= 0 & i1 <= 9) {
-                    bool = false;
-                }
-            }
-        } catch (NumberFormatException e) {
-
-            System.out.println("Merci de saisir un chiffre");
-        }
-
-
-        return bool;
     }
 
 
@@ -72,7 +41,7 @@ public class Utilities {
 
 
     public static void compareTwoString(String firstString, String secondString) {
-        for (int i = 0; i <= ((firstString.length()) - 1); i++) {
+        for (int i = 0; i < firstString.length(); i++) {
             compareTwoChar(firstString.charAt(i), secondString.charAt(i));
         }
         System.out.println(newLine);
