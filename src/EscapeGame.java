@@ -30,6 +30,10 @@ public class EscapeGame {
         gameMode = Utilities.askAnInt("À quels modes du jeu souhaitez-vous jouer ? (1 : Challenger, 2 : Défenseur, 3 : Duel)", 1, 3);
     }
 
+    public static int getLengthCombination() {
+        return LENGTH_COMBINATION;
+    }
+
     public void startChallengerMode() {
         System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
         getCombination(LENGTH_COMBINATION);
@@ -37,8 +41,15 @@ public class EscapeGame {
         do {
             getPlayerGuess();
 
+            try {
+                Utilities.compareTwoString(playerGuess, secretCombination);
+            } catch (StringIndexOutOfBoundsException f) {
 
-            Utilities.compareTwoString(playerGuess, secretCombination);
+                System.out.println("Merci de saisir un nombre composé de " + LENGTH_COMBINATION + " chiffres.1");
+
+            }
+
+
         } while (!playerGuess.equals(secretCombination));
     }
 
@@ -60,6 +71,8 @@ public class EscapeGame {
 
     private void getPlayerGuess() {
         do {
+
+            System.out.println("Votre proposition ?");
             playerGuess = sc.nextLine();
 
         }

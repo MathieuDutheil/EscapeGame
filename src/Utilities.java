@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -41,6 +43,12 @@ public class Utilities {
 
 
     public static void compareTwoString(String firstString, String secondString) {
+
+        if (firstString.length() != secondString.length()) {
+            System.out.println("Merci de saisir un nombre composé de " + EscapeGame.getLengthCombination() + " chiffres.2");
+            throw new StringIndexOutOfBoundsException();
+        }
+
         for (int i = 0; i < firstString.length(); i++) {
             compareTwoChar(firstString.charAt(i), secondString.charAt(i));
         }
