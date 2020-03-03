@@ -22,33 +22,20 @@ public class EscapeGame {
                 break;
 
         }
-
     }
-
 
     public void selectGameMode() {
         gameMode = Utilities.askAnInt("À quels modes du jeu souhaitez-vous jouer ? (1 : Challenger, 2 : Défenseur, 3 : Duel)", 1, 3);
     }
 
-    public static int getLengthCombination() {
-        return LENGTH_COMBINATION;
-    }
-
     public void startChallengerMode() {
         System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
-        getCombination(LENGTH_COMBINATION);
+        generateCombination();
         System.out.println(secretCombination);
         do {
             getPlayerGuess();
-
-            try {
-                Utilities.compareTwoString(playerGuess, secretCombination);
-            } catch (StringIndexOutOfBoundsException f) {
-
-                System.out.println("Merci de saisir un nombre composé de " + LENGTH_COMBINATION + " chiffres.1");
-
-            }
-
+            System.out.println(playerGuess);
+            compareGuessWithCombination();
 
         } while (!playerGuess.equals(secretCombination));
     }
@@ -61,9 +48,9 @@ public class EscapeGame {
 
     }
 
-    private void getCombination(int length) {
+    private void generateCombination() {
 
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < LENGTH_COMBINATION; i++) {
             secretCombination += Utilities.getRandomNumberInRange(0, 9);
         }
 
@@ -75,25 +62,45 @@ public class EscapeGame {
             System.out.println("Votre proposition ?");
             playerGuess = sc.nextLine();
 
-        }
-        while (!isOutputNumerical(playerGuess));
-
+        } while (!isOutputCorrect(playerGuess));
     }
 
-    private boolean isOutputNumerical(String outputToTest) { // miss try catch StringIndexOutOfBoundsException
-        boolean isNumerical = false;
-        for (int i = 0; i < outputToTest.length(); i++) {
-            int valueToTest = Character.getNumericValue(outputToTest.charAt(i));
-            if (valueToTest >= 0 && valueToTest <= 9) {
-                isNumerical = true;
-            } else {
-                System.out.println("Merci de saisir un chiffre à l'index " + (i + 1) + " de votre saisie.");
-                isNumerical = false;
-                break;
-            }
+    private boolean isOutputCorrect(String outputToTest) {
 
+        if (outputToTest.length() != LENGTH_COMBINATION) {
+            System.out.println("Attention votre saisie doit se limiter à " + LENGTH_COMBINATION + " caractères.");
+
+            return false;
         }
-        return isNumerical;
+
+        for (int i = 0; i < outputToTest.length(); i++) {
+            char c = outputToTest.charAt(i);
+            if (c < '0' || c > '9') {
+                System.out.println(c);
+
+                System.out.println("Attention votre  caractère n°" + (i + 1) + " n'est pas un chiffre.");
+                return false;
+            }
+        }
+        System.out.println("Saisie Correct");
+        return true;
+    }
+
+    private void compareGuessWithCombination() {
+
+
+        for (int i = 0; i < LENGTH_COMBINATION; i++) {
+            if (playerGuess.charAt(i) == secretCombination.charAt(i))
+                System.out.print("=");
+
+            if (playerGuess.charAt(i) < secretCombination.charAt(i)) {
+                System.out.print("+");
+            }
+            if (playerGuess.charAt(i) > secretCombination.charAt(i)) {
+                System.out.print("-");
+            }
+        }
+        System.out.println("");
     }
 }
 
