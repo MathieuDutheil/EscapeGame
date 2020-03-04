@@ -44,7 +44,7 @@ public class EscapeGame {
         do {
             getPlayerInput();
             System.out.println(playerInput);
-            compareGuessWithCombination();
+            compareInputWithCombination();
 
         } while (!playerInput.equals(secretCombination));
     }
@@ -98,7 +98,7 @@ public class EscapeGame {
         return true;
     }
 
-    private void compareGuessWithCombination() {
+    private void compareInputWithCombination() {
 
 
         for (int i = 0; i < LENGTH_COMBINATION; i++) {
