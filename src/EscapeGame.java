@@ -76,19 +76,19 @@ public class EscapeGame {
             System.out.println("Votre proposition ?");
             playerInput = sc.nextLine();
 
-        } while (!isOutputCorrect(playerInput));
+        } while (!isInputCorrect(playerInput));
     }
 
-    private boolean isOutputCorrect(String outputToTest) {
+    private boolean isInputCorrect(String inputToTest) {
 
-        if (outputToTest.length() != LENGTH_COMBINATION) {
+        if (inputToTest.length() != LENGTH_COMBINATION) {
             System.out.println("Attention votre saisie doit se limiter à " + LENGTH_COMBINATION + " caractères.");
 
             return false;
         }
 
-        for (int i = 0; i < outputToTest.length(); i++) {
-            char c = outputToTest.charAt(i);
+        for (int i = 0; i < inputToTest.length(); i++) {
+            char c = inputToTest.charAt(i);
             if (c < '0' || c > '9') {
                 System.out.println(c);
 
