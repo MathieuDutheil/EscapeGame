@@ -6,8 +6,6 @@ public class Utilities {
     private static Scanner sc = new Scanner(System.in);
 
 
-
-
     public static int getRandomNumberInRange(int min, int max) {
 
         if (min >= max) {
@@ -38,7 +36,6 @@ public class Utilities {
         } while (carac < lowLimit || carac > highLimit || isNonNumericalOutput);
         return carac;
     }
-
 
 
 }

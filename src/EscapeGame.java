@@ -2,26 +2,35 @@ import java.util.Scanner;
 
 public class EscapeGame {
     private int gameMode;
-    private String secretCombination = new String();
+    private String secretCombination;
     private String playerGuess;
     private final static int LENGTH_COMBINATION = 4;
     private Scanner sc = new Scanner(System.in);
 
     public void runGame() {
         System.out.println("Bienvenue dans Escape Game ONLINE");
-        selectGameMode();
-        switch (gameMode) {
-            case 1:
-                startChallengerMode();
-                break;
-            case 2:
-                startDefenderMode();
-                break;
-            default:
-                startDualMode();
-                break;
+        char restart;
+        do {
+            selectGameMode();
 
-        }
+
+            switch (gameMode) {
+                case 1:
+                    startChallengerMode();
+                    break;
+                case 2:
+                    startDefenderMode();
+                    break;
+                default:
+                    startDualMode();
+                    break;
+
+            }
+
+            System.out.println("Voulez-vous jouer de nouveau : Y = OUI ; N = NON.");
+            restart = sc.next().charAt(0);
+
+        } while (restart == 'Y');
     }
 
     public void selectGameMode() {
@@ -41,6 +50,9 @@ public class EscapeGame {
     }
 
     public void startDefenderMode() {
+        System.out.println("Vous avez choisir le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.");
+        System.out.println("Votre combinaison secrète ?");
+        getPlayerGuess();
 
     }
 
@@ -58,7 +70,7 @@ public class EscapeGame {
 
     private void getPlayerGuess() {
         do {
-
+            playerGuess = "";  // Vraiment utile ???
             System.out.println("Votre proposition ?");
             playerGuess = sc.nextLine();
 
