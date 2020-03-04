@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class EscapeGame {
     private int gameMode;
     private String secretCombination;
-    private String playerGuess;
+    private String playerInput;
     private final static int LENGTH_COMBINATION = 4;
     private Scanner sc = new Scanner(System.in);
 
@@ -28,7 +28,7 @@ public class EscapeGame {
             }
 
             System.out.println("Voulez-vous jouer de nouveau : Y = OUI ; N = NON.");
-            restart = sc.next().charAt(0);
+            restart = sc.next().charAt(0); // Manque contrôle sur cette saisie.
 
         } while (restart == 'Y');
     }
@@ -42,17 +42,17 @@ public class EscapeGame {
         generateCombination();
         System.out.println(secretCombination);
         do {
-            getPlayerGuess();
-            System.out.println(playerGuess);
+            getPlayerInput();
+            System.out.println(playerInput);
             compareGuessWithCombination();
 
-        } while (!playerGuess.equals(secretCombination));
+        } while (!playerInput.equals(secretCombination));
     }
 
     public void startDefenderMode() {
         System.out.println("Vous avez choisir le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.");
         System.out.println("Votre combinaison secrète ?");
-        getPlayerGuess();
+        getPlayerInput();
 
     }
 
@@ -68,13 +68,13 @@ public class EscapeGame {
 
     }
 
-    private void getPlayerGuess() {
+    private void getPlayerInput() {
         do {
-            playerGuess = "";  // Vraiment utile ???
+            playerInput = "";  // Vraiment utile ???
             System.out.println("Votre proposition ?");
-            playerGuess = sc.nextLine();
+            playerInput = sc.nextLine();
 
-        } while (!isOutputCorrect(playerGuess));
+        } while (!isOutputCorrect(playerInput));
     }
 
     private boolean isOutputCorrect(String outputToTest) {
@@ -102,13 +102,13 @@ public class EscapeGame {
 
 
         for (int i = 0; i < LENGTH_COMBINATION; i++) {
-            if (playerGuess.charAt(i) == secretCombination.charAt(i))
+            if (playerInput.charAt(i) == secretCombination.charAt(i))
                 System.out.print("=");
 
-            if (playerGuess.charAt(i) < secretCombination.charAt(i)) {
+            if (playerInput.charAt(i) < secretCombination.charAt(i)) {
                 System.out.print("+");
             }
-            if (playerGuess.charAt(i) > secretCombination.charAt(i)) {
+            if (playerInput.charAt(i) > secretCombination.charAt(i)) {
                 System.out.print("-");
             }
         }
