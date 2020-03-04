@@ -9,7 +9,7 @@ public class EscapeGame {
 
     public void runGame() {
         System.out.println("Bienvenue dans Escape Game ONLINE");
-        char restart;
+        String restart;
         do {
             selectGameMode();
 
@@ -28,9 +28,11 @@ public class EscapeGame {
             }
 
             System.out.println("Voulez-vous jouer de nouveau : Y = OUI ; N = NON.");
-            restart = sc.next().charAt(0); // Manque contrôle sur cette saisie.
+            do {
+                restart = sc.nextLine(); // Manque contrôle sur cette saisie.
+            } while (!restart.equals("Y") && !restart.equals("N"));
 
-        } while (restart == 'Y');
+        } while (restart.equals("Y"));
     }
 
     public void selectGameMode() {
