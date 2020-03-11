@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class EscapeGame {
     private int gameMode;
-    private String secretCombination;
+    private String secretCombination = "";
     private String playerInput;
     private final static int LENGTH_COMBINATION = 4;
     private Scanner sc = new Scanner(System.in);
@@ -27,12 +27,12 @@ public class EscapeGame {
 
             }
 
-            System.out.println("Voulez-vous jouer de nouveau : Y = OUI ; N = NON.");
+            System.out.println("Voulez-vous jouer de nouveau : O = OUI ; N = NON.");
             do {
                 restart = sc.nextLine(); // Manque contrôle sur cette saisie.
-            } while (!restart.equals("Y") && !restart.equals("N"));
+            } while (!restart.equals("O") && !restart.equals("N"));
 
-        } while (restart.equals("Y"));
+        } while (restart.equals("O"));
     }
 
     public void selectGameMode() {
@@ -46,7 +46,7 @@ public class EscapeGame {
         do {
             getPlayerInput();
             System.out.println(playerInput);
-            compareInputWithCombination();
+            System.out.println(compareInputWithCombination());
 
         } while (!playerInput.equals(secretCombination));
     }
@@ -72,7 +72,6 @@ public class EscapeGame {
 
     private void getPlayerInput() {
         do {
-            playerInput = "";  // Vraiment utile ???
             System.out.println("Votre proposition ?");
             playerInput = sc.nextLine();
 
@@ -82,7 +81,7 @@ public class EscapeGame {
     private boolean isInputCorrect(String inputToTest) {
 
         if (inputToTest.length() != LENGTH_COMBINATION) {
-            System.out.println("Attention votre saisie doit se limiter à " + LENGTH_COMBINATION + " caractères.");
+            System.out.println("Attention votre saisie doit être de " + LENGTH_COMBINATION + " caractères.");
 
             return false;
         }
@@ -100,21 +99,21 @@ public class EscapeGame {
         return true;
     }
 
-    private void compareInputWithCombination() {
+    private String compareInputWithCombination() {
 
+        String result = "";
 
         for (int i = 0; i < LENGTH_COMBINATION; i++) {
-            if (playerInput.charAt(i) == secretCombination.charAt(i))
-                System.out.print("=");
 
             if (playerInput.charAt(i) < secretCombination.charAt(i)) {
-                System.out.print("+");
-            }
-            if (playerInput.charAt(i) > secretCombination.charAt(i)) {
-                System.out.print("-");
-            }
+                result += "+";
+
+            } else if (playerInput.charAt(i) > secretCombination.charAt(i)) {
+                result += "-";
+
+            } else result += "=";
         }
-        System.out.println("");
+        return result;
     }
 }
 
