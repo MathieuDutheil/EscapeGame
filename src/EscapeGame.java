@@ -30,6 +30,9 @@ public class EscapeGame {
             System.out.println("Voulez-vous jouer de nouveau : O = OUI ; N = NON.");
             do {
                 restart = sc.nextLine(); // Manque contrôle sur cette saisie.
+                if (!restart.equals("O") && !restart.equals("N")) {
+                    System.out.println("Merci de saisir O ou N.");
+                }
             } while (!restart.equals("O") && !restart.equals("N"));
 
         } while (restart.equals("O"));
@@ -53,7 +56,7 @@ public class EscapeGame {
 
     public void startDefenderMode() {
         System.out.println("Vous avez choisir le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.");
-        System.out.println("Votre combinaison secrète ?");
+
         getPlayerInput();
 
     }
@@ -64,6 +67,7 @@ public class EscapeGame {
 
     private void generateCombination() {
 
+        secretCombination = "";
         for (int i = 0; i < LENGTH_COMBINATION; i++) {
             secretCombination += Utilities.getRandomNumberInRange(0, 9);
         }
