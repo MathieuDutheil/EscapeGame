@@ -159,22 +159,37 @@ public class EscapeGame {
                 for (int i = 0; i < indication.length(); i++) {
                     if (indication.charAt(i) == '+') {
 
-                        nextAnswer += ((guess.charAt(i) - '0') + ('2'-'0'));
+                        nextAnswer += ((guess.charAt(i) - '0') + ('2' - '0'));
                         System.out.println(nextAnswer);
 
                     } else if (indication.charAt(i) == '-') {
-                        nextAnswer += ((guess.charAt(i) - '0') - ('2'-'0'));
+                        nextAnswer += ((guess.charAt(i) - '0') - ('2' - '0'));
                         System.out.println(nextAnswer);
 
                     } else if (indication.charAt(i) == '=') {
-                        System.out.println(indication.charAt(i));
+                        nextAnswer += ((guess.charAt(i) - '0'));
+                        System.out.println(nextAnswer);
                     }
                 }
 
                 break;
 
-            case 2:
-                nextAnswer = "6666";
+            default:
+                for (int i = 0; i < indication.length(); i++) {
+                    if (indication.charAt(i) == '+') {
+
+                        nextAnswer += ((guess.charAt(i) - '0') + ('1' - '0'));
+                        System.out.println(nextAnswer);
+
+                    } else if (indication.charAt(i) == '-') {
+                        nextAnswer += ((guess.charAt(i) - '0') - ('1' - '0'));
+                        System.out.println(nextAnswer);
+
+                    } else if (indication.charAt(i) == '=') {
+                        nextAnswer += ((guess.charAt(i) - '0'));
+                        System.out.println(nextAnswer);
+                    }
+                }
                 break;
 
 
