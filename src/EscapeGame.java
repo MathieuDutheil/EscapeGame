@@ -59,15 +59,10 @@ public class EscapeGame {
         String playerInput = "";
 
         System.out.println("Vous avez choisi le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.");
-        getPlayerCombination();
+        playerCombination = getPlayerCombination();
         System.out.println("L'ordinateur va maintenant essayer de deviner votre combinaison secrète.");
 
         do {
-            System.out.println("computerGuess = " + computerGuess);
-            System.out.println("roundCounter = " + roundCounter);
-            System.out.println("playerInput = " + playerInput);
-            System.out.println("playerCombination = " + playerCombination);
-            System.out.println(computerGuess);
             computerGuess = buildNextComputerAnswer(roundCounter, playerInput, computerGuess);
             System.out.println(computerGuess);
             System.out.println("L'ordinateur a choisi : " + computerGuess);
@@ -75,9 +70,7 @@ public class EscapeGame {
             System.out.println("Exemple : Votre combinaison est 1234. Si l'ordinateur choisit la combinaison 3210. Vous devrez indiquez : +=--");
 
             do {
-
                 playerInput = sc.nextLine();
-
             } while (!playerInput.equals(compareGuessWithCombination(computerGuess, playerCombination)));
 
 
@@ -178,26 +171,23 @@ public class EscapeGame {
         String nextAnswer = "";
         switch (counter) {
             case 0:
-                System.out.println(indication);
-                System.out.println(guess);
                 nextAnswer = generateCombination();
                 break;
             case 1:
-                System.out.println("indication = " + indication);
-                System.out.println("guess = " + guess);
+
                 for (int i = 0; i < indication.length(); i++) {
                     if (indication.charAt(i) == '+') {
 
                         nextAnswer += ((guess.charAt(i) - '0') + ('2' - '0'));
-                        System.out.println(nextAnswer);
+
 
                     } else if (indication.charAt(i) == '-') {
                         nextAnswer += ((guess.charAt(i) - '0') - ('2' - '0'));
-                        System.out.println(nextAnswer);
+
 
                     } else if (indication.charAt(i) == '=') {
                         nextAnswer += ((guess.charAt(i) - '0'));
-                        System.out.println(nextAnswer);
+
                     }
                 }
 
@@ -208,15 +198,15 @@ public class EscapeGame {
                     if (indication.charAt(i) == '+') {
 
                         nextAnswer += ((guess.charAt(i) - '0') + ('1' - '0'));
-                        System.out.println(nextAnswer);
+
 
                     } else if (indication.charAt(i) == '-') {
                         nextAnswer += ((guess.charAt(i) - '0') - ('1' - '0'));
-                        System.out.println(nextAnswer);
+
 
                     } else if (indication.charAt(i) == '=') {
                         nextAnswer += ((guess.charAt(i) - '0'));
-                        System.out.println(nextAnswer);
+
                     }
                 }
                 break;
