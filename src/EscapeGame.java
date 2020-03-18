@@ -44,7 +44,7 @@ public class EscapeGame {
 
     public void startChallengerMode() {
         System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
-        generateCombination();
+        secretCombination = generateCombination();
         System.out.println(secretCombination);
         do {
             getPlayerCombination();
@@ -60,7 +60,7 @@ public class EscapeGame {
 
         String playerInput = "";
 
-        System.out.println("Vous avez choisir le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.");
+        System.out.println("Vous avez choisi le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.");
         getPlayerCombination();
         System.out.println("L'ordinateur va maintenant essayer de deviner votre combinaison secrète.");
 
@@ -92,13 +92,13 @@ public class EscapeGame {
 
     }
 
-    private void generateCombination() {
+    private String generateCombination() {
 
-        secretCombination = "";
+        String generateCombination = "";
         for (int i = 0; i < LENGTH_COMBINATION; i++) {
-            secretCombination += Utilities.getRandomNumberInRange(0, 9);
+            generateCombination += Utilities.getRandomNumberInRange(0, 9);
         }
-
+        return generateCombination;
     }
 
     private void getPlayerCombination() {
