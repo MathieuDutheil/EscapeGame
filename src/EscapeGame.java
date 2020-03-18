@@ -9,11 +9,10 @@ public class EscapeGame {
 
     public void runGame() {
         System.out.println("Bienvenue dans Escape Game ONLINE");
-        String restart;
+        String restart = "";
+        boolean b = (!restart.equals("O") && !restart.equals("N"));
         do {
             selectGameMode();
-
-
             switch (gameMode) {
                 case 1:
                     startChallengerMode();
@@ -24,17 +23,16 @@ public class EscapeGame {
                 default:
                     startDualMode();
                     break;
-
             }
 
             System.out.println("Voulez-vous jouer de nouveau : O = OUI ; N = NON.");
             do {
                 restart = sc.nextLine();
+
                 if (!restart.equals("O") && !restart.equals("N")) {
                     System.out.println("Merci de saisir O ou N.");
                 }
             } while (!restart.equals("O") && !restart.equals("N"));
-
         } while (restart.equals("O"));
     }
 
@@ -47,7 +45,7 @@ public class EscapeGame {
         secretCombination = generateCombination();
         System.out.println(secretCombination);
         do {
-            getPlayerCombination();
+            playerCombination = getPlayerCombination();
             System.out.println(playerCombination);
             System.out.println(compareGuessWithCombination(playerCombination, secretCombination));
 
@@ -89,7 +87,35 @@ public class EscapeGame {
     }
 
     public void startDualMode() {
+        System.out.println("Vous avez choisi le mode : Duel, vous allez devoir trouver la combinaison de l'ordinateur avant qu'il ne devine la votre.");
+        System.out.println("Le joueur choisit une combinaison.");
+        playerCombination = getPlayerCombination();
+        System.out.println("L'ordinateur choisit une combinaison.");
+        secretCombination = generateCombination();
 
+        int roundCounter = 0;
+        String playerGuess = "";
+        String playerIndication = "";
+        String computerGuess = "";
+
+
+        do {
+            playerGuess = getPlayerCombination();
+            System.out.println(playerGuess);
+            System.out.println(compareGuessWithCombination(playerGuess, secretCombination));
+
+            computerGuess = buildNextComputerAnswer(roundCounter, playerIndication, computerGuess);
+            System.out.println(computerGuess);
+            System.out.println("L'ordinateur a choisi : " + computerGuess);
+            System.out.println("Merci d'indiquer pour chaque caractère de votre combinaison si la valeur du caractère proposé par l'ordinateur est supérieur (avec un +), inférieur (avec un -) ou égale (avec un =).");
+            do {
+                System.out.println("combinaison joueur = " + playerCombination);
+                playerIndication = sc.nextLine();
+            } while (!playerIndication.equals(compareGuessWithCombination(computerGuess, playerCombination)));
+
+
+            roundCounter++;
+        } while (!playerGuess.equals(secretCombination) && !computerGuess.equals(playerCombination));
     }
 
     private String generateCombination() {
@@ -101,13 +127,16 @@ public class EscapeGame {
         return generateCombination;
     }
 
-    private void getPlayerCombination() {
+    private String getPlayerCombination() {
+        String getPlayerCombination = "";
         do {
             System.out.println("Votre proposition ?");
-            playerCombination = sc.nextLine();
+            getPlayerCombination = sc.nextLine();
 
-        } while (!isCombinationCorrect(playerCombination));
+        } while (!isCombinationCorrect(getPlayerCombination));
+        return getPlayerCombination;
     }
+
 
     private boolean isCombinationCorrect(String inputToTest) {
 
@@ -124,7 +153,7 @@ public class EscapeGame {
                 return false;
             }
         }
-        System.out.println("Saisie Correct");
+        System.out.println("Saisie Correcte");
         return true;
     }
 
@@ -151,7 +180,7 @@ public class EscapeGame {
             case 0:
                 System.out.println(indication);
                 System.out.println(guess);
-                nextAnswer = "5555";
+                nextAnswer = generateCombination();
                 break;
             case 1:
                 System.out.println("indication = " + indication);
