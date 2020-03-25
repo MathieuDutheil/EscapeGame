@@ -5,6 +5,7 @@ public class Game {
     private String secretCombination = "";
     private String playerCombination;
     private Scanner sc = new Scanner(System.in);
+    private boolean partyWin = true;
     private String intro;
     private String mode;
     private String computerCombination;
@@ -27,39 +28,38 @@ public class Game {
                         startDualMode();
                         break;
                 }
-                restart = Utilities.askAnInt("Voulez-vous : 1 - Rejouer au même mode, 2 - Lancer un autre mode, 3 - Quitter l'application )", 1, 3);
+                restart = Utilities.askAnInt("Voulez-vous : 1 - Rejouer au même mode, 2 - Lancer un autre mode, 3 - Quitter l'application.)", 1, 3);
             }
             while (restart == 1);
         } while (restart == 2);
     }
-    
+
 
     private void startChallengerMode() {
         System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
         String challengerSecretCombination = generateCombination();
-        String challengerPlayerCombination;
+
         do {
-            challengerPlayerCombination = getPlayerCombination("Votre proposition ?");
-        } while (compareGuessWithCombination(challengerPlayerCombination, challengerSecretCombination));
+            String challengerPlayerCombination = getPlayerCombination("Votre proposition ?");
+            compareGuessWithCombination(challengerPlayerCombination, challengerSecretCombination);
+        } while (!partyWin);
     }
 
     public void startDefenderMode() {
         String computerGuess = "";
         int roundCounter = 0;
-        String playerInput = "";
+        String clew = "";
         System.out.println("Vous avez choisi le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.");
-        playerCombination = getPlayerCombination("Quelle combinaison choisissez-vous ?");
+        String defenderPlayerCombination = getPlayerCombination("Quelle combinaison choisissez-vous ?");
         System.out.println("L'ordinateur va maintenant essayer de deviner votre combinaison secrète.");
 
         do {
-            computerGuess = buildNextComputerAnswer(roundCounter, playerInput, computerGuess);
-            System.out.println(computerGuess);
+            computerGuess = buildNextComputerAnswer(roundCounter, clew, computerGuess);
             System.out.println("L'ordinateur a choisi : " + computerGuess);
-            //playerInput = compareGuessWithCombination(computerGuess, playerCombination);
-            System.out.println(playerInput);
-
+            clew = compareGuessWithCombination(computerGuess, defenderPlayerCombination);
+            System.out.println(clew);
             roundCounter++;
-        } while (!computerGuess.equals(playerCombination));
+        } while (!partyWin);
 
     }
 
@@ -130,26 +130,29 @@ public class Game {
                 return false;
             }
         }
-        System.out.println("Saisie Correcte");
         return true;
     }
 
-    private boolean compareGuessWithCombination(String guess, String secret) {
+    private String compareGuessWithCombination(String guess, String secret) {
 
-        String result = "";
-
+        String clew = "";
+        partyWin = false;
         for (int i = 0; i < LENGTH_COMBINATION; i++) {
 
             if (guess.charAt(i) < secret.charAt(i)) {
-                result += "+";
+                clew += "+";
 
             } else if (guess.charAt(i) > secret.charAt(i)) {
-                result += "-";
+                clew += "-";
 
-            } else result += "=";
+            } else clew += "=";
         }
-        System.out.println(result);
-        return !guess.equals(secret);
+        System.out.println(clew);
+        if (clew.equals("====")) {
+            partyWin = true;
+        }
+
+        return clew;
 
     }
 
