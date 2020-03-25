@@ -11,34 +11,35 @@ public class Game {
     private String computerCombination;
 
 
-
     public void runGame() {
         System.out.println("Bienvenue dans Escape Game ONLINE");
-        String restart = "";
+        int restart;
 
         do {
             selectGameMode();
-            switch (gameMode) {
-                case 1:
-                    startChallengerMode();
-                    break;
-                case 2:
-                    startDefenderMode();
-                    break;
-                default:
-                    startDualMode();
-                    break;
+
+            do {
+
+                switch (gameMode) {
+                    case 1:
+                        startChallengerMode();
+                        break;
+                    case 2:
+                        startDefenderMode();
+                        break;
+                    default:
+                        startDualMode();
+                        break;
+                }
+                restart = Utilities.askAnInt("Voulez-vous : 1 - Rejouer au même mode, 2 - Lancer un autre mode, 3 - Quitter l'application )", 1, 3);
             }
 
-            System.out.println("Voulez-vous jouer de nouveau : O = OUI ; N = NON.");
-            do {
-                restart = sc.nextLine();
-                if (!restart.equals("O") && !restart.equals("N")) {
-                    System.out.println("Merci de saisir O ou N.");
-                }
-            } while (!restart.equals("O") && !restart.equals("N"));
-        } while (restart.equals("O"));
+            while (restart == 1);
+
+
+        } while (restart == 2);
     }
+
 
     public void selectGameMode() {
         gameMode = Utilities.askAnInt("À quels modes du jeu souhaitez-vous jouer ? (1 : Challenger, 2 : Défenseur, 3 : Duel)", 1, 3);
