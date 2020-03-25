@@ -1,6 +1,7 @@
-public class ChallengerMode extends AbstractMode {
+public class ChallengerMode extends Game {
 
-    public ChallengerMode() {
-        this.setMode("Challenger");
-    }
+
+
+
+
 }

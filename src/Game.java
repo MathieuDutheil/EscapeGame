@@ -1,11 +1,16 @@
 import java.util.Scanner;
 
-public class EscapeGame {
+public class Game {
     private int gameMode;
+    private static final int LENGTH_COMBINATION = 4;
     private String secretCombination = "";
     private String playerCombination;
-    private final static int LENGTH_COMBINATION = 4;
     private Scanner sc = new Scanner(System.in);
+    private String intro;
+    private String mode;
+    private String computerCombination;
+
+
 
     public void runGame() {
         System.out.println("Bienvenue dans Escape Game ONLINE");
@@ -39,32 +44,28 @@ public class EscapeGame {
         gameMode = Utilities.askAnInt("À quels modes du jeu souhaitez-vous jouer ? (1 : Challenger, 2 : Défenseur, 3 : Duel)", 1, 3);
     }
 
-    public void startChallengerMode() {
+    private void startChallengerMode() {
         System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
-        secretCombination = generateCombination();
+        String challengerSecretCombination = generateCombination();
+        String challengerPlayerCombination;
         do {
-            playerCombination = getPlayerCombination();
-            System.out.println(playerCombination);
-            System.out.println(compareGuessWithCombination(playerCombination, secretCombination));
-
-        } while (!playerCombination.equals(secretCombination));
+            challengerPlayerCombination = getPlayerCombination("Votre proposition ?");
+        } while (compareGuessWithCombination(challengerPlayerCombination, challengerSecretCombination));
     }
 
     public void startDefenderMode() {
         String computerGuess = "";
         int roundCounter = 0;
-
         String playerInput = "";
-
         System.out.println("Vous avez choisi le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.");
-        playerCombination = getPlayerCombination();
+        playerCombination = getPlayerCombination("Quelle combinaison choisissez-vous ?");
         System.out.println("L'ordinateur va maintenant essayer de deviner votre combinaison secrète.");
 
         do {
             computerGuess = buildNextComputerAnswer(roundCounter, playerInput, computerGuess);
             System.out.println(computerGuess);
             System.out.println("L'ordinateur a choisi : " + computerGuess);
-            playerInput = compareGuessWithCombination(computerGuess, playerCombination);
+            //playerInput = compareGuessWithCombination(computerGuess, playerCombination);
             System.out.println(playerInput);
 
             roundCounter++;
@@ -75,7 +76,7 @@ public class EscapeGame {
     public void startDualMode() {
         System.out.println("Vous avez choisi le mode : Duel, vous allez devoir trouver la combinaison de l'ordinateur avant qu'il ne devine la votre.");
         System.out.println("Le joueur choisit une combinaison.");
-        playerCombination = getPlayerCombination();
+        playerCombination = getPlayerCombination("Quelle combinaison secrète choisissez-vous ?");
         System.out.println("L'ordinateur choisit une combinaison.");
         secretCombination = generateCombination();
 
@@ -86,7 +87,7 @@ public class EscapeGame {
 
 
         do {
-            playerGuess = getPlayerCombination();
+            playerGuess = getPlayerCombination("Votre proposition ?");
             System.out.println(playerGuess);
             System.out.println(compareGuessWithCombination(playerGuess, secretCombination));
 
@@ -104,6 +105,7 @@ public class EscapeGame {
         } while (!playerGuess.equals(secretCombination) && !computerGuess.equals(playerCombination));
     }
 
+
     private String generateCombination() {
 
         String generateCombination = "";
@@ -113,16 +115,15 @@ public class EscapeGame {
         return generateCombination;
     }
 
-    private String getPlayerCombination() {
+    private String getPlayerCombination(String intro) {
         String getPlayerCombination = "";
         do {
-            System.out.println("Votre proposition ?");
+            System.out.println(intro);
             getPlayerCombination = sc.nextLine();
 
         } while (!isCombinationCorrect(getPlayerCombination));
         return getPlayerCombination;
     }
-
 
     private boolean isCombinationCorrect(String inputToTest) {
 
@@ -139,11 +140,11 @@ public class EscapeGame {
                 return false;
             }
         }
-
+        System.out.println("Saisie Correcte");
         return true;
     }
 
-    private String compareGuessWithCombination(String guess, String secret) {
+    private boolean compareGuessWithCombination(String guess, String secret) {
 
         String result = "";
 
@@ -157,7 +158,9 @@ public class EscapeGame {
 
             } else result += "=";
         }
-        return result;
+        System.out.println(result);
+        return !guess.equals(secret);
+
     }
 
     private String buildNextComputerAnswer(int counter, String indication, String guess) {
@@ -165,25 +168,6 @@ public class EscapeGame {
         switch (counter) {
             case 0:
                 nextAnswer = generateCombination();
-                break;
-            case 1:
-
-                for (int i = 0; i < indication.length(); i++) {
-                    if (indication.charAt(i) == '+') {
-
-                        nextAnswer += ((guess.charAt(i) - '0') + ('2' - '0'));
-
-
-                    } else if (indication.charAt(i) == '-') {
-                        nextAnswer += ((guess.charAt(i) - '0') - ('2' - '0'));
-
-
-                    } else if (indication.charAt(i) == '=') {
-                        nextAnswer += ((guess.charAt(i) - '0'));
-
-                    }
-                }
-
                 break;
 
             default:
@@ -209,6 +193,12 @@ public class EscapeGame {
         return nextAnswer;
     }
 }
+
+
+
+
+
+
 
 
 
