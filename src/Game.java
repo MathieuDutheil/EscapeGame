@@ -32,11 +32,7 @@ public class Game {
             while (restart == 1);
         } while (restart == 2);
     }
-
-
-    public void selectGameMode() {
-
-    }
+    
 
     private void startChallengerMode() {
         System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
