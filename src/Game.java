@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class Game {
-    private int gameMode;
     private static final int LENGTH_COMBINATION = 4;
     private String secretCombination = "";
     private String playerCombination;
@@ -14,12 +13,9 @@ public class Game {
     public void runGame() {
         System.out.println("Bienvenue dans Escape Game ONLINE");
         int restart;
-
         do {
-            selectGameMode();
-
+            int gameMode = Utilities.askAnInt("À quels modes du jeu souhaitez-vous jouer ? (1 : Challenger, 2 : Défenseur, 3 : Duel)", 1, 3);
             do {
-
                 switch (gameMode) {
                     case 1:
                         startChallengerMode();
@@ -33,16 +29,13 @@ public class Game {
                 }
                 restart = Utilities.askAnInt("Voulez-vous : 1 - Rejouer au même mode, 2 - Lancer un autre mode, 3 - Quitter l'application )", 1, 3);
             }
-
             while (restart == 1);
-
-
         } while (restart == 2);
     }
 
 
     public void selectGameMode() {
-        gameMode = Utilities.askAnInt("À quels modes du jeu souhaitez-vous jouer ? (1 : Challenger, 2 : Défenseur, 3 : Duel)", 1, 3);
+
     }
 
     private void startChallengerMode() {
