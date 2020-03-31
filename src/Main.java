@@ -8,7 +8,7 @@ public class Main {
             do {
                 switch (gameMode) {
                     case 1:
-                        Game game = new ChallengerMode();
+                        AbstractGame game = new ChallengerMode();
                         game.runGame();
                         break;
                     case 2:
@@ -21,7 +21,7 @@ public class Main {
                         break;
                 }
 
-                restart = Utilities.askAnInt("Voulez-vous : 1 - Rejouer au même mode, 2 - Lancer un autre mode, 3 - Quitter l'application.)", 1, 3);
+                restart = Utilities.askAnInt("Voulez-vous : 1 - Rejouer au même mode, 2 - Lancer un autre mode, 3 - Quitter l'application.", 1, 3);
             }
             while (restart == 1);
         } while (restart == 2);
