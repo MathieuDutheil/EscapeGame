@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Game {
     private static final int LENGTH_COMBINATION = 4;
     private Scanner sc = new Scanner(System.in);
-    private boolean partyWin = true;
+    private boolean partyWin = false;
 
 
     public void runGame() {
@@ -76,7 +76,7 @@ public class Game {
             computerGuess = buildNextComputerAnswer(roundCounter, playerIndication, computerGuess);
             System.out.println("L'ordinateur a choisi : " + computerGuess);
             System.out.println("combinaison joueur = " + dualPlayerCombination);
-            playerIndication = compareGuessWithCombination(computerGuess, dualPlayerCombination, "l'Ordinateur");
+            playerIndication = compareGuessWithCombination(computerGuess, dualPlayerCombination, "l'Ordinateur ");
             roundCounter++;
         } while (!partyWin);
     }
