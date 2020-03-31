@@ -12,31 +12,6 @@ public abstract class AbstractGame {
     }
 
     public abstract void runGame();
-    
-    public void startDualMode() {
-        System.out.println("Vous avez choisi le mode : Duel, vous allez devoir trouver la combinaison secrète de l'ordinateur avant qu'il ne devine la votre.");
-        String dualPlayerCombination = getPlayerCombination("Quelle combinaison secrète choisissez-vous ?");
-        System.out.println("L'ordinateur choisit une combinaison.");
-        String dualComputerCombination = generateCombination();
-
-        int roundCounter = 0;
-        String playerGuess = "";
-        String playerIndication = "";
-        String computerGuess = "";
-
-
-        do {
-            playerGuess = getPlayerCombination("À votre tour de tenter de deviner la combinaison secrète de l'ordinateur. Votre proposition ?");
-            compareGuessWithCombination(playerGuess, dualComputerCombination, "le Joueur");
-
-            computerGuess = buildNextComputerAnswer(playerIndication, computerGuess);
-            System.out.println("L'ordinateur a choisi : " + computerGuess);
-            System.out.println("combinaison joueur = " + dualPlayerCombination);
-            playerIndication = compareGuessWithCombination(computerGuess, dualPlayerCombination, "l'Ordinateur ");
-            roundCounter++;
-        } while (!partyWin);
-    }
-
 
     String generateCombination() {
 
