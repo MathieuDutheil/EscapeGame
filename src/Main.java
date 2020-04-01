@@ -18,9 +18,10 @@ public class Main {
                         game = new DualMode();
                         break;
                 }
-                game.runGame();
 
+                game.runGame();
                 restart = Utilities.askAnInt("Voulez-vous : 1 - Rejouer au même mode, 2 - Lancer un autre mode, 3 - Quitter l'application.", 1, 3);
+
             }
             while (restart == 1);
         } while (restart == 2);

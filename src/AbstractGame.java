@@ -15,21 +15,21 @@ public abstract class AbstractGame {
 
     String generateCombination() {
 
-        String generateCombination = "";
+        String combination = "";
         for (int i = 0; i < LENGTH_COMBINATION; i++) {
-            generateCombination += Utilities.getRandomNumberInRange(0, 9);
+            combination += Utilities.getRandomNumberInRange(0, 9);
         }
-        return generateCombination;
+        return combination;
     }
 
     String getPlayerCombination(String intro) {
-        String getPlayerCombination = "";
+        String playerCombination = "";
         do {
             System.out.println(intro);
-            getPlayerCombination = sc.nextLine();
+            playerCombination = sc.nextLine();
 
-        } while (!isCombinationCorrect(getPlayerCombination));
-        return getPlayerCombination;
+        } while (!isCombinationCorrect(playerCombination));
+        return playerCombination;
     }
 
     private boolean isCombinationCorrect(String inputToTest) {
