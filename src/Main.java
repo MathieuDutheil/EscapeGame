@@ -10,15 +10,12 @@ public class Main {
                 switch (gameMode) {
                     case 1:
                         game = new ChallengerMode();
-
                         break;
                     case 2:
                         game = new DefenderMode();
-
                         break;
                     default:
                         game = new DualMode();
-
                         break;
                 }
                 game.runGame();
