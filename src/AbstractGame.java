@@ -53,7 +53,7 @@ public abstract class AbstractGame {
     String compareGuessWithCombination(String guess, String secret, String playerName) {
 
         String clew = "";
-        int clews = 0;
+        int goodResponse = 0;
         for (int i = 0; i < LENGTH_COMBINATION; i++) {
 
             if (guess.charAt(i) < secret.charAt(i)) {
@@ -64,11 +64,11 @@ public abstract class AbstractGame {
 
             } else {
                 clew += "=";
-                clews++;
+                goodResponse++;
             }
         }
         System.out.println(clew);
-        if (clews == LENGTH_COMBINATION) {
+        if (goodResponse == LENGTH_COMBINATION) {
             System.out.println("Bravo " + playerName + " a découvert la combinaison de son adversaire.");
             partyWin = true;
         }
@@ -85,10 +85,10 @@ public abstract class AbstractGame {
 
         for (int i = 0; i < indication.length(); i++) {
             if (indication.charAt(i) == '+') {
-                nextAnswer += Utilities.getRandomNumberInRange((guess.charAt(i) - '0'), 9);
+                nextAnswer += Utilities.getRandomNumberInRange((guess.charAt(i) - '0') + 1, 9);
 
             } else if (indication.charAt(i) == '-') {
-                nextAnswer += Utilities.getRandomNumberInRange(0, (guess.charAt(i) - '0'));
+                nextAnswer += Utilities.getRandomNumberInRange(0, (guess.charAt(i) - '0') - 1);
 
             } else if (indication.charAt(i) == '=') {
                 nextAnswer += ((guess.charAt(i) - '0'));
