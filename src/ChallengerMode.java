@@ -9,6 +9,6 @@ public class ChallengerMode extends AbstractGame {
         do {
             String challengerPlayerCombination = getPlayerCombination("Essayer de deviner la combinaison secrète de l'ordinateur. Votre proposition ?");
             compareGuessWithCombination(challengerPlayerCombination, computerCombination, "le Joueur");
-        } while (!isPartyWin());
+        } while (!isPartyWon());
     }
 }

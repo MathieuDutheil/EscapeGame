@@ -1,4 +1,4 @@
-public class Main {
+public class EscapeGameApp {
 
     public static void main(String[] args) {
 

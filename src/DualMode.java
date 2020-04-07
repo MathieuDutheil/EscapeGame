@@ -21,6 +21,6 @@ public class DualMode extends AbstractGame {
             System.out.println("combinaison joueur = " + playerCombination);
             clew = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur ");
           
-        } while (!isPartyWin());
+        } while (!isPartyWon());
     }
 }

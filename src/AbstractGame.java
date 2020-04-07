@@ -5,10 +5,10 @@ public abstract class AbstractGame {
     private Scanner sc = new Scanner(System.in);
 
 
-    private boolean partyWin = false;
+    private boolean partyWon = false;
 
-    public boolean isPartyWin() {
-        return partyWin;
+    public boolean isPartyWon() {
+        return partyWon;
     }
 
     public abstract void runGame();
@@ -70,7 +70,7 @@ public abstract class AbstractGame {
         System.out.println(clew);
         if (goodResponse == LENGTH_COMBINATION) {
             System.out.println("Bravo " + playerName + " a découvert la combinaison de son adversaire.");
-            partyWin = true;
+            partyWon = true;
         }
 
         return clew;

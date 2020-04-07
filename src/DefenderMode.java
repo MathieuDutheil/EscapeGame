@@ -13,6 +13,6 @@ public class DefenderMode extends AbstractGame {
             System.out.println("L'Ordinateur a choisi : " + computerGuess);
             clew = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
 
-        } while (!isPartyWin());
+        } while (!isPartyWon());
     }
 }
