@@ -3,8 +3,8 @@ import java.util.Scanner;
 public abstract class AbstractGame {
     private static final int LENGTH_COMBINATION = 4;
     private Scanner sc = new Scanner(System.in);
-
-
+    private int minRange[] = new int[LENGTH_COMBINATION];
+    private int maxRange[] = new int[LENGTH_COMBINATION];
     private boolean partyWon = false;
 
     public boolean isPartyWon() {
@@ -53,7 +53,7 @@ public abstract class AbstractGame {
     String compareGuessWithCombination(String guess, String secret, String playerName) {
 
         String clew = "";
-        int goodResponse = 0;
+        int nbGoodResponses = 0;
         for (int i = 0; i < LENGTH_COMBINATION; i++) {
 
             if (guess.charAt(i) < secret.charAt(i)) {
@@ -64,11 +64,11 @@ public abstract class AbstractGame {
 
             } else {
                 clew += "=";
-                goodResponse++;
+                nbGoodResponses++;
             }
         }
         System.out.println(clew);
-        if (goodResponse == LENGTH_COMBINATION) {
+        if (nbGoodResponses == LENGTH_COMBINATION) {
             System.out.println("Bravo " + playerName + " a découvert la combinaison de son adversaire.");
             partyWon = true;
         }
@@ -77,21 +77,32 @@ public abstract class AbstractGame {
 
     }
 
-    String buildNextComputerAnswer(String indication, String guess) {
+    void initializeRange(int min, int max) {
+        for (int i = 0; i < LENGTH_COMBINATION; i++) {
+            minRange[i] = min;
+            maxRange[i] = max;
+        }
+
+    }
+
+    String buildNextComputerGuess(String indication, String oldGuess) {
         String nextAnswer = "";
         if (indication == "") {
-            return generateCombination();
+            // Mettre initializeRange ici ?
+            return oldGuess;
         }
 
         for (int i = 0; i < indication.length(); i++) {
             if (indication.charAt(i) == '+') {
-                nextAnswer += Utilities.getRandomNumberInRange((guess.charAt(i) - '0') + 1, 9);
+                minRange[i] = ((oldGuess.charAt(i) - '0') + 1);
+                nextAnswer += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
 
             } else if (indication.charAt(i) == '-') {
-                nextAnswer += Utilities.getRandomNumberInRange(0, (guess.charAt(i) - '0') - 1);
+                maxRange[i]= ((oldGuess.charAt(i) - '0') - 1);
+                nextAnswer += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
 
             } else if (indication.charAt(i) == '=') {
-                nextAnswer += ((guess.charAt(i) - '0'));
+                nextAnswer += oldGuess.charAt(i);
 
             }
         }
