@@ -7,6 +7,7 @@ public abstract class AbstractGame {
     private int maxRange[] = new int[LENGTH_COMBINATION];
     private boolean partyWon = false;
     private static final int LIMITED_NUMBER_OF_TRIALS = 5;
+    private static boolean DEVELOPPER_MODE = false;
 
     public boolean isPartyWon() {
         return partyWon;
