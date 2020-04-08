@@ -6,11 +6,15 @@ public abstract class AbstractGame {
     private int minRange[] = new int[LENGTH_COMBINATION];
     private int maxRange[] = new int[LENGTH_COMBINATION];
     private boolean partyWon = false;
+    private static final int LIMITED_NUMBER_OF_TRIALS = 5;
 
     public boolean isPartyWon() {
         return partyWon;
     }
 
+    public static int getLimitedNumberOfTrials() {
+        return LIMITED_NUMBER_OF_TRIALS;
+    }
     public abstract void runGame();
 
     String generateCombination() {
@@ -98,7 +102,7 @@ public abstract class AbstractGame {
                 nextAnswer += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
 
             } else if (indication.charAt(i) == '-') {
-                maxRange[i]= ((oldGuess.charAt(i) - '0') - 1);
+                maxRange[i] = ((oldGuess.charAt(i) - '0') - 1);
                 nextAnswer += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
 
             } else if (indication.charAt(i) == '=') {

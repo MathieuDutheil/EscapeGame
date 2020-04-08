@@ -10,12 +10,14 @@ public class DefenderMode extends AbstractGame {
         String computerGuess = generateCombination();
         String clew = "";
         initializeRange(0, 9);
+        int numberOfTrials = 0;
 
         do {
             computerGuess = buildNextComputerGuess(clew, computerGuess);
             System.out.println("L'Ordinateur a choisi : " + computerGuess);
             clew = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
-        } while (!isPartyWon());
+            numberOfTrials++;
+        } while (!isPartyWon() && numberOfTrials != getLimitedNumberOfTrials());
     }
 
 }
