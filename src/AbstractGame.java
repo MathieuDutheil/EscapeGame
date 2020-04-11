@@ -6,16 +6,17 @@ public abstract class AbstractGame {
     private int minRange[] = new int[LENGTH_COMBINATION];
     private int maxRange[] = new int[LENGTH_COMBINATION];
     private boolean partyWon = false;
-    private static final int LIMITED_NUMBER_OF_TRIALS = 5;
+    private static final int MAX_NUMBER_OF_TRIALS = 5;
     private static boolean DEVELOPPER_MODE = false;
 
     public boolean isPartyWon() {
         return partyWon;
     }
 
-    public static int getLimitedNumberOfTrials() {
-        return LIMITED_NUMBER_OF_TRIALS;
+    public static int getMaxNumberOfTrials() {
+        return MAX_NUMBER_OF_TRIALS;
     }
+
     public abstract void runGame();
 
     String generateCombination() {
@@ -72,6 +73,7 @@ public abstract class AbstractGame {
                 nbGoodResponses++;
             }
         }
+
         System.out.println(clew);
         if (nbGoodResponses == LENGTH_COMBINATION) {
             System.out.println("Bravo " + playerName + " a découvert la combinaison de son adversaire.");
@@ -90,26 +92,26 @@ public abstract class AbstractGame {
 
     }
 
-    String buildNextComputerGuess(String indication, String oldGuess) {
-        String nextAnswer = "";
-        if (indication == "") {
-            // Mettre initializeRange ici ?
-            return oldGuess;
-        }
-
-        for (int i = 0; i < indication.length(); i++) {
+    void updateRange(String oldGuess, String indication) {
+        for (int i = 0; i < LENGTH_COMBINATION; i++) {
             if (indication.charAt(i) == '+') {
                 minRange[i] = ((oldGuess.charAt(i) - '0') + 1);
-                nextAnswer += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
 
             } else if (indication.charAt(i) == '-') {
                 maxRange[i] = ((oldGuess.charAt(i) - '0') - 1);
-                nextAnswer += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
 
             } else if (indication.charAt(i) == '=') {
-                nextAnswer += oldGuess.charAt(i);
+                minRange[i] = (oldGuess.charAt(i) - '0');
+                maxRange[i] = (oldGuess.charAt(i) - '0');
 
             }
+        }
+    }
+
+    String generateNextComputerCombination() {
+        String nextAnswer = "";
+        for (int i = 0; i < LENGTH_COMBINATION; i++) {
+            nextAnswer += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
         }
         return nextAnswer;
     }

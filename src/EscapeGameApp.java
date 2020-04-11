@@ -7,7 +7,8 @@ public class EscapeGameApp {
             int gameMode = Utilities.askAnInt("À quels modes du jeu souhaitez-vous jouer ? (1 : Challenger, 2 : Défenseur, 3 : Duel)", 1, 3);
             do {
 
-                AbstractGame game;
+                AbstractGame game = null;
+
                 switch (gameMode) {
                     case 1:
                         game = new ChallengerMode();

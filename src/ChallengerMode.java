@@ -10,6 +10,6 @@ public class ChallengerMode extends AbstractGame {
             String challengerPlayerCombination = getPlayerCombination("Essayer de deviner la combinaison secrète de l'ordinateur. Votre proposition ?");
             compareGuessWithCombination(challengerPlayerCombination, computerCombination, "le Joueur");
             numberOfTrials++;
-        } while (!isPartyWon() && numberOfTrials != getLimitedNumberOfTrials());
+        } while (!isPartyWon() && numberOfTrials != getMaxNumberOfTrials());
     }
 }
