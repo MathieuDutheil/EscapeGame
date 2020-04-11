@@ -24,21 +24,10 @@ public abstract class AbstractGame {
 
     public abstract void runGame();
 
-    String generateCombination() {
-
-        String combination = "";
-        for (int i = 0; i < lengthCombination; i++) {
-            combination += Utilities.getRandomNumberInRange(0, 9);
-        }
-        return combination;
-    }
-
     void loadProperties() {
-
         final Properties prop = new Properties();
         InputStream input = null;
         try {
-            
             input = new FileInputStream("/Volumes/Macintosh HD/Users/Mathieu/Documents/Workspace/EscapeGame/src/config.properties");
             prop.load(input);
             lengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
@@ -103,7 +92,6 @@ public abstract class AbstractGame {
                 nbGoodResponses++;
             }
         }
-
         System.out.println(clew);
         if (nbGoodResponses == lengthCombination) {
             System.out.println("Bravo " + playerName + " a découvert la combinaison de son adversaire.");
