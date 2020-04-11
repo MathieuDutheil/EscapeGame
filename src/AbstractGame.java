@@ -1,20 +1,25 @@
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.Scanner;
 
 public abstract class AbstractGame {
-    private static final int LENGTH_COMBINATION = 4;
+    private int lengthCombination;
     private Scanner sc = new Scanner(System.in);
-    private int minRange[] = new int[LENGTH_COMBINATION];
-    private int maxRange[] = new int[LENGTH_COMBINATION];
+    private int minRange[] = new int[lengthCombination];
+    private int maxRange[] = new int[lengthCombination];
     private boolean partyWon = false;
-    private static final int MAX_NUMBER_OF_TRIALS = 5;
-    private static boolean DEVELOPPER_MODE = false;
+    private int maxNumberOfTrials;
+    private boolean developperMode;
+
 
     public boolean isPartyWon() {
         return partyWon;
     }
 
-    public static int getMaxNumberOfTrials() {
-        return MAX_NUMBER_OF_TRIALS;
+    public int getMaxNumberOfTrials() {
+        return maxNumberOfTrials;
     }
 
     public abstract void runGame();
@@ -22,10 +27,35 @@ public abstract class AbstractGame {
     String generateCombination() {
 
         String combination = "";
-        for (int i = 0; i < LENGTH_COMBINATION; i++) {
+        for (int i = 0; i < lengthCombination; i++) {
             combination += Utilities.getRandomNumberInRange(0, 9);
         }
         return combination;
+    }
+
+    void loadProperties() {
+
+        final Properties prop = new Properties();
+        InputStream input = null;
+        try {
+            
+            input = new FileInputStream("/Volumes/Macintosh HD/Users/Mathieu/Documents/Workspace/EscapeGame/src/config.properties");
+            prop.load(input);
+            lengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
+            maxNumberOfTrials = Integer.parseInt(prop.getProperty("LIMITED_NUMBER_OF_TRIALS"));
+            developperMode = Boolean.parseBoolean(prop.getProperty("DEVELOPPER_MODE"));
+
+        } catch (final IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     String getPlayerCombination(String intro) {
@@ -40,8 +70,8 @@ public abstract class AbstractGame {
 
     private boolean isCombinationCorrect(String inputToTest) {
 
-        if (inputToTest.length() != LENGTH_COMBINATION) {
-            System.out.println("Attention votre saisie doit être de " + LENGTH_COMBINATION + " caractères.");
+        if (inputToTest.length() != lengthCombination) {
+            System.out.println("Attention votre saisie doit être de " + lengthCombination + " caractères.");
 
             return false;
         }
@@ -60,7 +90,7 @@ public abstract class AbstractGame {
 
         String clew = "";
         int nbGoodResponses = 0;
-        for (int i = 0; i < LENGTH_COMBINATION; i++) {
+        for (int i = 0; i < lengthCombination; i++) {
 
             if (guess.charAt(i) < secret.charAt(i)) {
                 clew += "+";
@@ -75,7 +105,7 @@ public abstract class AbstractGame {
         }
 
         System.out.println(clew);
-        if (nbGoodResponses == LENGTH_COMBINATION) {
+        if (nbGoodResponses == lengthCombination) {
             System.out.println("Bravo " + playerName + " a découvert la combinaison de son adversaire.");
             partyWon = true;
         }
@@ -85,7 +115,7 @@ public abstract class AbstractGame {
     }
 
     void initializeRange(int min, int max) {
-        for (int i = 0; i < LENGTH_COMBINATION; i++) {
+        for (int i = 0; i < lengthCombination; i++) {
             minRange[i] = min;
             maxRange[i] = max;
         }
@@ -93,7 +123,7 @@ public abstract class AbstractGame {
     }
 
     void updateRange(String oldGuess, String indication) {
-        for (int i = 0; i < LENGTH_COMBINATION; i++) {
+        for (int i = 0; i < lengthCombination; i++) {
             if (indication.charAt(i) == '+') {
                 minRange[i] = ((oldGuess.charAt(i) - '0') + 1);
 
@@ -110,7 +140,7 @@ public abstract class AbstractGame {
 
     String generateNextComputerCombination() {
         String nextAnswer = "";
-        for (int i = 0; i < LENGTH_COMBINATION; i++) {
+        for (int i = 0; i < lengthCombination; i++) {
             nextAnswer += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
         }
         return nextAnswer;
