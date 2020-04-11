@@ -7,8 +7,8 @@ import java.util.Scanner;
 public abstract class AbstractGame {
     private int lengthCombination;
     private Scanner sc = new Scanner(System.in);
-    private int minRange[] = new int[lengthCombination];
-    private int maxRange[] = new int[lengthCombination];
+    private int[] minRange;
+    private int[] maxRange;
     private boolean partyWon = false;
     private int maxNumberOfTrials;
     private boolean developperMode;
@@ -103,6 +103,8 @@ public abstract class AbstractGame {
     }
 
     void initializeRange(int min, int max) {
+        minRange =  new int[lengthCombination];
+        maxRange = new int[lengthCombination];
         for (int i = 0; i < lengthCombination; i++) {
             minRange[i] = min;
             maxRange[i] = max;
