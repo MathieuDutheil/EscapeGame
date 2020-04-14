@@ -6,6 +6,11 @@ public class EscapeGameApp {
         do {
             int gameMode = Utilities.askAnInt("À quels modes du jeu souhaitez-vous jouer ? (1 : Challenger, 2 : Défenseur, 3 : Duel)", 1, 3);
             do {
+               /* AbstractGame loadProperties = new ChallengerMode();
+                loadProperties.loadProperties();*/ //doesn't work
+
+                /*AbstractGame game = new ChallengerMode();
+                game.loadProperties();*/ //doesn't work
 
                 AbstractGame game;
                 switch (gameMode) {

@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,10 +26,13 @@ public abstract class AbstractGame {
     public abstract void runGame();
 
     void loadProperties() {
+
+        String path = new File("src/config.properties").getAbsolutePath();
+        System.out.println(path);
         final Properties prop = new Properties();
         InputStream input = null;
         try {
-            input = new FileInputStream("/Volumes/Macintosh HD/Users/Mathieu/Documents/Workspace/EscapeGame/src/config.properties");
+            input = new FileInputStream(path);
             prop.load(input);
             lengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
             maxNumberOfTrials = Integer.parseInt(prop.getProperty("LIMITED_NUMBER_OF_TRIALS"));
