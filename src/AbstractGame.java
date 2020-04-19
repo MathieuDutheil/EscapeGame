@@ -31,7 +31,6 @@ public abstract class AbstractGame {
         //int minRange[] = new int[4] {0};
         //array creation with both dimension expression and initialization is illegal
 
-
     }
 
 
@@ -126,15 +125,6 @@ public abstract class AbstractGame {
 
     }
 
-    void initializeRange(int min, int max) {
-        minRange = new int[lengthCombination];
-        maxRange = new int[lengthCombination];
-        for (int i = 0; i < lengthCombination; i++) {
-            minRange[i] = min;
-            maxRange[i] = max;
-        }
-
-    }
 
     void updateRange(String oldGuess, String indication) {
         for (int i = 0; i < lengthCombination; i++) {
