@@ -2,17 +2,37 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.Scanner;
 
 public abstract class AbstractGame {
-    private int lengthCombination;
+
+    private int lengthCombination ;
     private Scanner sc = new Scanner(System.in);
     private int[] minRange;
     private int[] maxRange;
     private boolean partyWon = false;
     private int maxNumberOfTrials;
     private boolean developperMode;
+
+    public AbstractGame() {
+        loadProperties();
+        minRange = new int[lengthCombination];
+        //System.out.println(Arrays.toString(minRange));
+        // Output : [0, 0, 0, 0]
+        //Arrays.fill(minRange, 0); Est-ce que je mets cette ligne quand même ?
+
+        maxRange = new int[lengthCombination];
+        Arrays.fill(maxRange, 9);
+        //System.out.println(Arrays.toString(maxRange));
+        // Output :  [9, 9, 9, 9]
+
+        //int minRange[] = new int[4] {0};
+        //array creation with both dimension expression and initialization is illegal
+
+
+    }
 
 
     public boolean isPartyWon() {
@@ -81,33 +101,33 @@ public abstract class AbstractGame {
 
     String compareGuessWithCombination(String guess, String secret, String playerName) {
 
-        String clew = "";
+        String clue = "";
         int nbGoodResponses = 0;
         for (int i = 0; i < lengthCombination; i++) {
 
             if (guess.charAt(i) < secret.charAt(i)) {
-                clew += "+";
+                clue += "+";
 
             } else if (guess.charAt(i) > secret.charAt(i)) {
-                clew += "-";
+                clue += "-";
 
             } else {
-                clew += "=";
+                clue += "=";
                 nbGoodResponses++;
             }
         }
-        System.out.println(clew);
+        System.out.println(clue);
         if (nbGoodResponses == lengthCombination) {
             System.out.println("Bravo " + playerName + " a découvert la combinaison de son adversaire.");
             partyWon = true;
         }
 
-        return clew;
+        return clue;
 
     }
 
     void initializeRange(int min, int max) {
-        minRange =  new int[lengthCombination];
+        minRange = new int[lengthCombination];
         maxRange = new int[lengthCombination];
         for (int i = 0; i < lengthCombination; i++) {
             minRange[i] = min;

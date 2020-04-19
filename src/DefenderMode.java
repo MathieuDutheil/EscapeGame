@@ -8,15 +8,14 @@ public class DefenderMode extends AbstractGame {
         String playerCombination = getPlayerCombination("Quelle combinaison choisissez-vous ?");
         System.out.println("L'ordinateur va maintenant essayer de deviner votre combinaison secrète.");
         String computerGuess = "";
-        String clew = "";
-        initializeRange(0, 9);
+        String clue = "";
         int numberOfTrials = 0;
 
         do {
             computerGuess = generateNextComputerCombination();
             System.out.println("L'Ordinateur a choisi : " + computerGuess);
-            clew = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
-            updateRange(computerGuess, clew);
+            clue = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
+            updateRange(computerGuess, clue);
 
             numberOfTrials++;
         } while (!isPartyWon() && numberOfTrials != getMaxNumberOfTrials());

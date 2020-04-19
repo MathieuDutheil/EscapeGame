@@ -6,12 +6,11 @@ public class DualMode extends AbstractGame {
         System.out.println("Vous avez choisi le mode : Duel, vous allez devoir trouver la combinaison secrète de l'ordinateur avant qu'il ne devine la votre.");
         String playerCombination = getPlayerCombination("Quelle combinaison secrète choisissez-vous ?");
         System.out.println("L'Ordinateur choisit une combinaison.");
-        initializeRange(0,9);
         String computerCombination = generateNextComputerCombination();
         String playerGuess = "";
-        String clew = "";
+        String clue = "";
         String computerGuess = computerCombination;
-        int numberOfTrials = 0;
+
 
         do {
 
@@ -21,12 +20,12 @@ public class DualMode extends AbstractGame {
 
             System.out.println("L'Ordinateur a choisi : " + computerGuess);
             System.out.println("combinaison joueur = " + playerCombination);
-            clew = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
-            updateRange(computerGuess, clew);
+            clue = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
+            updateRange(computerGuess, clue);
             computerGuess = generateNextComputerCombination();
 
-            numberOfTrials++;
 
-        } while (!isPartyWon() && numberOfTrials != getMaxNumberOfTrials());
+
+        } while (!isPartyWon());
     }
 }

@@ -24,7 +24,7 @@ public class EscapeGameApp {
                         game = new DualMode();
                         break;
                 }
-                game.loadProperties();
+               // game.loadProperties();
                 game.runGame();
 
                 restart = Utilities.askAnInt("Voulez-vous : 1 - Rejouer au même mode, 2 - Lancer un autre mode, 3 - Quitter l'application.", 1, 3);
