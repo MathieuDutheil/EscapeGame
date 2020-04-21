@@ -1,20 +1,18 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Properties;
 import java.util.Scanner;
 
 public abstract class AbstractGame {
 
-    private int lengthCombination ;
+    private int lengthCombination = 4;
     private Scanner sc = new Scanner(System.in);
     private int[] minRange;
     private int[] maxRange;
     private boolean partyWon = false;
-    private int maxNumberOfTrials;
-    private boolean developperMode;
+    private int maxNumberOfTrials = 5;
+    private boolean developperMode = false;
 
     public AbstractGame() {
         loadProperties();
@@ -48,6 +46,7 @@ public abstract class AbstractGame {
 
         String path = new File("src/config.properties").getAbsolutePath();
         System.out.println(path);
+
         final Properties prop = new Properties();
         InputStream input = null;
         try {
@@ -56,6 +55,9 @@ public abstract class AbstractGame {
             lengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
             maxNumberOfTrials = Integer.parseInt(prop.getProperty("LIMITED_NUMBER_OF_TRIALS"));
             developperMode = Boolean.parseBoolean(prop.getProperty("DEVELOPPER_MODE"));
+
+        } catch (FileNotFoundException | InputMismatchException | NumberFormatException ex) {
+            System.out.println(ex.getMessage());
 
         } catch (final IOException ex) {
             ex.printStackTrace();
@@ -143,9 +145,14 @@ public abstract class AbstractGame {
     }
 
     String generateNextComputerCombination() {
+
         String nextAnswer = "";
         for (int i = 0; i < lengthCombination; i++) {
             nextAnswer += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
+        }
+        System.out.println(developperMode);
+        if (developperMode) {
+            System.out.println("Combinaison = " + nextAnswer);
         }
         return nextAnswer;
     }
