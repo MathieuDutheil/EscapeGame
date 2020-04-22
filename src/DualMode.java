@@ -17,13 +17,13 @@ public class DualMode extends AbstractGame {
             playerGuess = getPlayerCombination("À votre tour de tenter de deviner la combinaison secrète de l'ordinateur. Votre proposition ?");
             compareGuessWithCombination(playerGuess, computerCombination, "le Joueur");
 
-
-            System.out.println("L'Ordinateur a choisi : " + computerGuess);
-            System.out.println("combinaison joueur = " + playerCombination);
-            clue = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
-            updateRange(computerGuess, clue);
-            computerGuess = generateNextComputerCombination();
-
+            if (!isPartyWon()) {
+                System.out.println("L'Ordinateur a choisi : " + computerGuess);
+                System.out.println("combinaison joueur = " + playerCombination);
+                clue = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
+                updateRange(computerGuess, clue);
+                computerGuess = generateNextComputerCombination();
+            }
 
 
         } while (!isPartyWon());
