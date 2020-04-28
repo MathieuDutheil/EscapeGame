@@ -5,19 +5,27 @@ import java.util.Scanner;
 
 public abstract class AbstractGame {
 
-    private int lengthCombination = 4;
+    private static boolean isPropertyLoad = false;
+    private static int lengthCombination = 4;
     private Scanner sc = new Scanner(System.in);
     private int[] minRange;
     private int[] maxRange;
     private boolean partyWon = false;
-    private int maxNumberOfTrials = 5;
-    private boolean developperMode = false;
+    private  static int maxNumberOfTrials = 5;
+    private static boolean developperMode = false;
     private final static int MIN_LENGTH_COMBINATION = 1;
     private final static int MAX_LENGTH_COMBINATION = 10;
     private final static int MIN_NUMBER_OF_TRIALS = 3;
 
     public AbstractGame() {
-        loadProperties();
+        if (!isPropertyLoad) {
+            loadProperties();
+            isPropertyLoad = true;
+        }
+
+        System.out.println(lengthCombination);
+        System.out.println(maxNumberOfTrials);
+        System.out.println(developperMode);
         minRange = new int[lengthCombination];
         maxRange = new int[lengthCombination];
         Arrays.fill(maxRange, 9);
@@ -68,7 +76,7 @@ public abstract class AbstractGame {
         }
 
         try {
-            int checkNumberOfTrials = Integer.parseInt(prop.getProperty("LIMITED_NUMBER_OF_TRIALS"));
+            int checkNumberOfTrials = Integer.parseInt(prop.getProperty("MAX_NUMBER_OF_TRIALS"));
             if (checkNumberOfTrials <= MIN_NUMBER_OF_TRIALS) {
                 maxNumberOfTrials = checkNumberOfTrials;
             }
