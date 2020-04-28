@@ -6,11 +6,6 @@ public class EscapeGameApp {
         do {
             int gameMode = Utilities.askAnInt("À quels modes du jeu souhaitez-vous jouer ? (1 : Challenger, 2 : Défenseur, 3 : Duel)", 1, 3);
             do {
-               /* AbstractGame loadProperties = new ChallengerMode();
-                loadProperties.loadProperties();*/ //doesn't work
-
-                /*AbstractGame game = new ChallengerMode();
-                game.loadProperties();*/ //doesn't work
 
                 AbstractGame game;
                 switch (gameMode) {
@@ -24,7 +19,6 @@ public class EscapeGameApp {
                         game = new DualMode();
                         break;
                 }
-               // game.loadProperties();
                 game.runGame();
 
                 restart = Utilities.askAnInt("Voulez-vous : 1 - Rejouer au même mode, 2 - Lancer un autre mode, 3 - Quitter l'application.", 1, 3);

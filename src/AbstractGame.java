@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -13,22 +12,15 @@ public abstract class AbstractGame {
     private boolean partyWon = false;
     private int maxNumberOfTrials = 5;
     private boolean developperMode = false;
+    private final static int MIN_LENGTH_COMBINATION = 1;
+    private final static int MAX_LENGTH_COMBINATION = 10;
+    private final static int MIN_NUMBER_OF_TRIALS = 3;
 
     public AbstractGame() {
         loadProperties();
         minRange = new int[lengthCombination];
-        //System.out.println(Arrays.toString(minRange));
-        // Output : [0, 0, 0, 0]
-        //Arrays.fill(minRange, 0); Est-ce que je mets cette ligne quand même ?
-
         maxRange = new int[lengthCombination];
         Arrays.fill(maxRange, 9);
-        //System.out.println(Arrays.toString(maxRange));
-        // Output :  [9, 9, 9, 9]
-
-        //int minRange[] = new int[4] {0};
-        //array creation with both dimension expression and initialization is illegal
-
     }
 
 
@@ -52,13 +44,8 @@ public abstract class AbstractGame {
         try {
             input = new FileInputStream(path);
             prop.load(input);
-            lengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
-            maxNumberOfTrials = Integer.parseInt(prop.getProperty("LIMITED_NUMBER_OF_TRIALS"));
-            developperMode = Boolean.parseBoolean(prop.getProperty("DEVELOPPER_MODE"));
-
-        } catch (FileNotFoundException | InputMismatchException | NumberFormatException ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
-
         } catch (final IOException ex) {
             ex.printStackTrace();
         } finally {
@@ -70,6 +57,27 @@ public abstract class AbstractGame {
                 }
             }
         }
+
+        try {
+            int checkLengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
+            if (checkLengthCombination >= MIN_LENGTH_COMBINATION && checkLengthCombination <= MAX_LENGTH_COMBINATION) {
+                lengthCombination = checkLengthCombination;
+            }
+        } catch (NumberFormatException ex) {
+            ex.getMessage();
+        }
+
+        try {
+            int checkNumberOfTrials = Integer.parseInt(prop.getProperty("LIMITED_NUMBER_OF_TRIALS"));
+            if (checkNumberOfTrials <= MIN_NUMBER_OF_TRIALS) {
+                maxNumberOfTrials = checkNumberOfTrials;
+            }
+        } catch (NumberFormatException ex) {
+            ex.getMessage();
+        }
+
+        developperMode = Boolean.parseBoolean(prop.getProperty("DEVELOPPER_MODE"));
+
     }
 
     String getPlayerCombination(String intro) {
@@ -150,7 +158,6 @@ public abstract class AbstractGame {
         for (int i = 0; i < lengthCombination; i++) {
             nextAnswer += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
         }
-        System.out.println(developperMode);
         if (developperMode) {
             System.out.println("Combinaison = " + nextAnswer);
         }
