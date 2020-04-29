@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.Properties;
 import java.util.Scanner;
 
+
 public abstract class AbstractGame {
 
     private static boolean isPropertyLoad = false;
