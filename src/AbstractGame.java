@@ -6,22 +6,22 @@ import java.util.Scanner;
 
 public abstract class AbstractGame {
 
-    private static boolean isPropertyLoad = false;
+    private static boolean propertyLoaded = false;
     private static int lengthCombination = 4;
     private Scanner sc = new Scanner(System.in);
     private int[] minRange;
     private int[] maxRange;
     private boolean partyWon = false;
-    private  static int maxNumberOfTrials = 5;
+    private static int maxNumberOfTrials = 5;
     private static boolean developperMode = false;
     private final static int MIN_LENGTH_COMBINATION = 1;
     private final static int MAX_LENGTH_COMBINATION = 10;
     private final static int MIN_NUMBER_OF_TRIALS = 3;
 
     public AbstractGame() {
-        if (!isPropertyLoad) {
+        if (!propertyLoaded) {
             loadProperties();
-            isPropertyLoad = true;
+            propertyLoaded = true;
         }
         minRange = new int[lengthCombination];
         maxRange = new int[lengthCombination];
@@ -49,6 +49,27 @@ public abstract class AbstractGame {
         try {
             input = new FileInputStream(path);
             prop.load(input);
+
+            try {
+                int checkLengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
+                if (checkLengthCombination >= MIN_LENGTH_COMBINATION && checkLengthCombination <= MAX_LENGTH_COMBINATION) {
+                    lengthCombination = checkLengthCombination;
+                }
+            } catch (NumberFormatException ex) {
+                ex.getMessage();
+            }
+
+            try {
+                int checkNumberOfTrials = Integer.parseInt(prop.getProperty("MAX_NUMBER_OF_TRIALS"));
+                if (checkNumberOfTrials >= MIN_NUMBER_OF_TRIALS) {
+                    maxNumberOfTrials = checkNumberOfTrials;
+                }
+            } catch (NumberFormatException ex) {
+                ex.getMessage();
+            }
+
+            developperMode = Boolean.parseBoolean(prop.getProperty("DEVELOPPER_MODE"));
+
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         } catch (final IOException ex) {
@@ -62,27 +83,6 @@ public abstract class AbstractGame {
                 }
             }
         }
-
-        try {
-            int checkLengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
-            if (checkLengthCombination >= MIN_LENGTH_COMBINATION && checkLengthCombination <= MAX_LENGTH_COMBINATION) {
-                lengthCombination = checkLengthCombination;
-            }
-        } catch (NumberFormatException ex) {
-            ex.getMessage();
-        }
-
-        try {
-            int checkNumberOfTrials = Integer.parseInt(prop.getProperty("MAX_NUMBER_OF_TRIALS"));
-            if (checkNumberOfTrials <= MIN_NUMBER_OF_TRIALS) {
-                maxNumberOfTrials = checkNumberOfTrials;
-            }
-        } catch (NumberFormatException ex) {
-            ex.getMessage();
-        }
-
-        developperMode = Boolean.parseBoolean(prop.getProperty("DEVELOPPER_MODE"));
-
     }
 
     String getPlayerCombination(String intro) {
