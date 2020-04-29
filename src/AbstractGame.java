@@ -22,10 +22,6 @@ public abstract class AbstractGame {
             loadProperties();
             isPropertyLoad = true;
         }
-
-        System.out.println(lengthCombination);
-        System.out.println(maxNumberOfTrials);
-        System.out.println(developperMode);
         minRange = new int[lengthCombination];
         maxRange = new int[lengthCombination];
         Arrays.fill(maxRange, 9);
