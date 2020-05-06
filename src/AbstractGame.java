@@ -1,3 +1,4 @@
+import org.apache.log4j.Logger;
 import java.io.*;
 import java.util.Arrays;
 import java.util.Properties;
@@ -17,6 +18,7 @@ public abstract class AbstractGame {
     private final static int MIN_LENGTH_COMBINATION = 1;
     private final static int MAX_LENGTH_COMBINATION = 10;
     private final static int MIN_NUMBER_OF_TRIALS = 3;
+    private static org.apache.log4j.Logger logger = Logger.getLogger(AbstractGame.class);
 
     public AbstractGame() {
         if (!propertyLoaded) {
@@ -56,7 +58,7 @@ public abstract class AbstractGame {
                     lengthCombination = checkLengthCombination;
                 }
             } catch (NumberFormatException ex) {
-                ex.getMessage();
+                logger.info(ex.getMessage());
             }
 
             try {
@@ -65,16 +67,16 @@ public abstract class AbstractGame {
                     maxNumberOfTrials = checkNumberOfTrials;
                 }
             } catch (NumberFormatException ex) {
-                ex.getMessage();
+                logger.info(ex.getMessage());
             }
 
             developperMode = Boolean.parseBoolean(prop.getProperty("DEVELOPPER_MODE"));
 
         } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
+            logger.info(ex.getMessage());
 
         } catch (final IOException ex) {
-            ex.printStackTrace();
+            logger.error(ex.getMessage());
         }
     }
 

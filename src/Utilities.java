@@ -1,10 +1,12 @@
+import org.apache.log4j.Logger;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
 public class Utilities {
     private static Scanner sc = new Scanner(System.in);
-
+    private static org.apache.log4j.Logger logger = Logger.getLogger(AbstractGame.class);
 
     public static int getRandomNumberInRange(int min, int max) {
 
@@ -34,6 +36,7 @@ public class Utilities {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Merci de saisir un chiffre.");
+                logger.info(e.getMessage());
                 isNonNumericalOutput = true;
                 sc.nextLine();
             }
