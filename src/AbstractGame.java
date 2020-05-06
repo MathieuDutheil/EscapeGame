@@ -45,9 +45,9 @@ public abstract class AbstractGame {
         System.out.println(path);
 
         final Properties prop = new Properties();
-        InputStream input = null;
-        try {
-            input = new FileInputStream(path);
+
+        try (InputStream input = new FileInputStream(path)) {
+
             prop.load(input);
 
             try {
@@ -72,16 +72,9 @@ public abstract class AbstractGame {
 
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
+
         } catch (final IOException ex) {
             ex.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (final IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
