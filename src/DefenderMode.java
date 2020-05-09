@@ -16,6 +16,11 @@ public class DefenderMode extends AbstractGame {
             System.out.println("L'Ordinateur a choisi : " + computerGuess);
             clue = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
             updateRange(computerGuess, clue);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             numberOfTrials++;
         } while (!isPartyWon() && numberOfTrials != getMaxNumberOfTrials());
