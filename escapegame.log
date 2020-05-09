@@ -1,5 +1,0 @@
-2020-05-06 15:11:54,114 [INFO ] (AbstractGame.java:<init>:33) true
-2020-05-06 16:23:45,998 [INFO ] (AbstractGame.java:loadProperties:76) /Volumes/Macintosh HD/Users/Mathieu/Documents/Workspace/EscapeGame/src/config.propertiessss (No such file or directory)
-2020-05-06 16:40:25,600 [INFO ] (AbstractGame.java:loadProperties:76) /Volumes/Macintosh HD/Users/Mathieu/Documents/Workspace/EscapeGame/src/config.propertiessss (No such file or directory)
-2020-05-06 16:41:11,131 [INFO ] (AbstractGame.java:loadProperties:61) For input string: "fsefsefsef"
-2020-05-06 16:41:11,134 [INFO ] (AbstractGame.java:loadProperties:70) For input string: "sfsefseff"
