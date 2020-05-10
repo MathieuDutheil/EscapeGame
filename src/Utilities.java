@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Utilities {
     private static Scanner sc = new Scanner(System.in);
-    private static org.apache.log4j.Logger logger = Logger.getLogger(AbstractGame.class);
+    private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(Utilities.class);
 
     public static int getRandomNumberInRange(int min, int max) {
 
@@ -23,25 +23,29 @@ public class Utilities {
 
 
     public static int askAnInt(String intro, int lowLimit, int highLimit) {
-
-        int carac = 0;
-        boolean isNonNumericalOutput;
+        LOGGER.trace("method askAnInt started");
+        LOGGER.debug("lowLimit = " + lowLimit + " ,highLimit = " + highLimit);
+        int intAsked = 0;
+        boolean isNonNumericalInput;
         do {
             try {
-                isNonNumericalOutput = false;
+                isNonNumericalInput = false;
                 System.out.println(intro);
-                carac = sc.nextInt();
-                if (carac < lowLimit || carac > highLimit) {
+                intAsked = sc.nextInt();
+                if (intAsked < lowLimit || intAsked > highLimit) {
+                    LOGGER.warn("user input for intAsked out of boundaries = " + intAsked);
                     System.out.println("Attention la saisie attendue doit être comprise entre " + lowLimit + " et " + highLimit + ", recommencez la saisie.");
                 }
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException ex) {
                 System.out.println("Merci de saisir un chiffre.");
-                logger.info(e.getMessage());
-                isNonNumericalOutput = true;
+                LOGGER.error(ex.toString());
+                isNonNumericalInput = true;
                 sc.nextLine();
             }
-        } while (carac < lowLimit || carac > highLimit || isNonNumericalOutput);
-        return carac;
+        } while (intAsked < lowLimit || intAsked > highLimit || isNonNumericalInput);
+        LOGGER.debug("intAsked = " + intAsked);
+        LOGGER.trace("method askAnInt finished");
+        return intAsked;
     }
 
 }

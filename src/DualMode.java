@@ -1,5 +1,7 @@
-public class DualMode extends AbstractGame {
+import org.apache.log4j.Logger;
 
+public class DualMode extends AbstractGame {
+    private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(AbstractGame.class);
     @Override
     public void runGame() {
 

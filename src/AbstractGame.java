@@ -1,4 +1,5 @@
 import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.util.Arrays;
 import java.util.Properties;
@@ -9,16 +10,16 @@ public abstract class AbstractGame {
 
     private static boolean propertyLoaded = false;
     private static int lengthCombination = 4;
-    private Scanner sc = new Scanner(System.in);
-    private int[] minRange;
-    private int[] maxRange;
-    private boolean partyWon = false;
     private static int maxNumberOfTrials = 5;
     private static boolean developperMode = false;
+    private Scanner sc = new Scanner(System.in);
+    private final int[] minRange;
+    private final int[] maxRange;
+    private boolean partyWon = false;
     private final static int MIN_LENGTH_COMBINATION = 1;
     private final static int MAX_LENGTH_COMBINATION = 10;
     private final static int MIN_NUMBER_OF_TRIALS = 3;
-    private static org.apache.log4j.Logger logger = Logger.getLogger(AbstractGame.class);
+    private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(AbstractGame.class);
 
     public AbstractGame() {
         if (!propertyLoaded) {
@@ -35,14 +36,14 @@ public abstract class AbstractGame {
         return partyWon;
     }
 
-    public int getMaxNumberOfTrials() {
+    protected int getMaxNumberOfTrials() {
         return maxNumberOfTrials;
     }
 
     public abstract void runGame();
 
     void loadProperties() {
-
+        LOGGER.trace("method loadProperties started");
         String path = new File("src/config.properties").getAbsolutePath();
         System.out.println(path);
 
@@ -56,28 +57,35 @@ public abstract class AbstractGame {
                 int checkLengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
                 if (checkLengthCombination >= MIN_LENGTH_COMBINATION && checkLengthCombination <= MAX_LENGTH_COMBINATION) {
                     lengthCombination = checkLengthCombination;
+                    LOGGER.debug("lengthCombination = " + lengthCombination);
                 }
             } catch (NumberFormatException ex) {
-                logger.info(ex.getMessage());
+                LOGGER.warn(ex.toString());
+                LOGGER.debug("lengthCombination = " + lengthCombination);
             }
 
             try {
                 int checkNumberOfTrials = Integer.parseInt(prop.getProperty("MAX_NUMBER_OF_TRIALS"));
                 if (checkNumberOfTrials >= MIN_NUMBER_OF_TRIALS) {
                     maxNumberOfTrials = checkNumberOfTrials;
+                    LOGGER.debug("maxNumberOfTrials = " + maxNumberOfTrials);
                 }
             } catch (NumberFormatException ex) {
-                logger.info(ex.getMessage());
+                LOGGER.warn(ex.toString());
+                LOGGER.debug("maxNumberOfTrials = " + maxNumberOfTrials);
+
             }
 
             developperMode = Boolean.parseBoolean(prop.getProperty("DEVELOPPER_MODE"));
+            LOGGER.debug("developperMode = " + developperMode);
 
         } catch (FileNotFoundException ex) {
-            logger.info(ex.getMessage());
+            LOGGER.error(ex.toString());
 
         } catch (final IOException ex) {
-            logger.error(ex.getMessage());
+            LOGGER.error(ex.toString());
         }
+        LOGGER.trace("method loadProperties finished");
     }
 
     String getPlayerCombination(String intro) {

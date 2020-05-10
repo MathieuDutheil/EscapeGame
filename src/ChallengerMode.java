@@ -1,5 +1,8 @@
+import org.apache.log4j.Logger;
+
 public class ChallengerMode extends AbstractGame {
 
+    private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(ChallengerMode.class);
 
     @Override
     public void runGame() {
