@@ -6,6 +6,7 @@ public class ChallengerMode extends AbstractGame {
 
     @Override
     public void runGame() {
+        LOGGER.trace("runGame method started");
         System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
         String computerCombination = generateNextComputerCombination();
         int numberOfTrials = 0;
@@ -14,5 +15,6 @@ public class ChallengerMode extends AbstractGame {
             compareGuessWithCombination(challengerPlayerCombination, computerCombination, "le Joueur");
             numberOfTrials++;
         } while (!isPartyWon() && numberOfTrials != getMaxNumberOfTrials());
+        LOGGER.trace("runGame method finished");
     }
 }
