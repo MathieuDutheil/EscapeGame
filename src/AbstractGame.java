@@ -61,7 +61,7 @@ public abstract class AbstractGame {
                 }
             } catch (NumberFormatException ex) {
                 LOGGER.warn(ex.toString());
-                LOGGER.debug("lengthCombination = " + lengthCombination);
+                LOGGER.debug("lengthCombination put to default value = " + lengthCombination);
             }
 
             try {
@@ -72,18 +72,16 @@ public abstract class AbstractGame {
                 }
             } catch (NumberFormatException ex) {
                 LOGGER.warn(ex.toString());
-                LOGGER.debug("maxNumberOfTrials = " + maxNumberOfTrials);
+                LOGGER.debug("maxNumberOfTrials put to default value = " + maxNumberOfTrials);
 
             }
 
             developperMode = Boolean.parseBoolean(prop.getProperty("DEVELOPPER_MODE"));
             LOGGER.debug("developperMode = " + developperMode);
 
-        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
             LOGGER.error(ex.toString());
 
-        } catch (final IOException ex) {
-            LOGGER.error(ex.toString());
         }
         LOGGER.trace("method loadProperties finished");
     }
