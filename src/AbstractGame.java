@@ -11,7 +11,7 @@ public abstract class AbstractGame {
     private static boolean propertyLoaded = false;
     private static int lengthCombination = 4;
     private static int maxNumberOfTrials = 5;
-    private static boolean developperMode = false;
+    private static boolean developerMode = false;
     private Scanner sc = new Scanner(System.in);
     private final int[] minRange;
     private final int[] maxRange;
@@ -80,14 +80,14 @@ public abstract class AbstractGame {
 
             }
 
-            developperMode = Boolean.parseBoolean(prop.getProperty("DEVELOPPER_MODE"));
-            LOGGER.debug("developperMode = " + developperMode);
+            developerMode = Boolean.parseBoolean(prop.getProperty("DEVELOPER_MODE"));
+            LOGGER.debug("developerMode = " + developerMode);
 
         } catch (IOException ex) {  // suffisant ou séparer avec FileNotFoundException ?
             LOGGER.error(ex.toString());
             LOGGER.debug("lengthCombination put to default value = " + lengthCombination);
             LOGGER.debug("maxNumberOfTrials put to default value = " + maxNumberOfTrials);
-            LOGGER.debug("developperMode put to default value = " + developperMode);
+            LOGGER.debug("developerMode put to default value = " + developerMode);
 
         }
         LOGGER.trace("method loadProperties finished");
@@ -108,6 +108,7 @@ public abstract class AbstractGame {
 
     private boolean isCombinationCorrect(String combination) {
         LOGGER.trace("method isCombinationCorrect started");
+        LOGGER.debug("combination = " + combination);
         if (combination.length() != lengthCombination) {
             System.out.println("Attention votre saisie doit être de " + lengthCombination + " caractères.");
             LOGGER.warn("combination's length is not good = " + combination.length() + ", lengthCombination = " + lengthCombination);
@@ -118,7 +119,7 @@ public abstract class AbstractGame {
             char c = combination.charAt(i);
             if (c < '0' || c > '9') {
                 System.out.println("Attention votre  caractère n°" + (i + 1) + " n'est pas un chiffre.");
-                LOGGER.warn("character n°" + i + 1 + " is not a number = " + combination.charAt(i));
+                LOGGER.warn("character n°" + (i + 1) + " is not a number = " + combination.charAt(i));
                 return false;
             }
         }
@@ -128,6 +129,7 @@ public abstract class AbstractGame {
 
     String compareGuessWithCombination(String guess, String secret, String playerName) {
         LOGGER.trace("method compareGuessWithCombination started");
+        LOGGER.debug("guess = " + guess + ", secret = " + secret);
         String clue = "";
         int nbGoodResponses = 0;
         for (int i = 0; i < lengthCombination; i++) {
@@ -159,6 +161,8 @@ public abstract class AbstractGame {
 
 
     void updateRange(String oldGuess, String indication) {
+        LOGGER.trace("method updateRange started");
+        LOGGER.debug("oldGuess = " + oldGuess + " ,indication = " + indication);
         for (int i = 0; i < lengthCombination; i++) {
             if (indication.charAt(i) == '+') {
                 minRange[i] = ((oldGuess.charAt(i) - '0') + 1);
@@ -172,6 +176,9 @@ public abstract class AbstractGame {
 
             }
         }
+        LOGGER.debug("minRange = " + Arrays.toString(minRange));
+        LOGGER.debug("maxRange = " + Arrays.toString(maxRange));
+        LOGGER.trace("method updateRange finished");
     }
 
     String generateNextComputerCombination() {
@@ -180,7 +187,7 @@ public abstract class AbstractGame {
         for (int i = 0; i < lengthCombination; i++) {
             nextComputerCombination += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
         }
-        if (developperMode) {
+        if (developerMode) {
             System.out.println("Combinaison = " + nextComputerCombination);
         }
 

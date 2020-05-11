@@ -6,13 +6,14 @@ public class DefenderMode extends AbstractGame {
 
     @Override
     public void runGame() {
-
+        LOGGER.info("runGame method started");
         System.out.println("Vous avez choisi le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.");
         String playerCombination = getPlayerCombination("Quelle combinaison choisissez-vous ?");
         System.out.println("L'ordinateur va maintenant essayer de deviner votre combinaison secrète.");
         String computerGuess = "";
         String clue = "";
         int numberOfTrials = 0;
+        LOGGER.debug("numberOfTrials = " + numberOfTrials);
 
         do {
             computerGuess = generateNextComputerCombination();
@@ -22,11 +23,14 @@ public class DefenderMode extends AbstractGame {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                LOGGER.error(e.toString());
             }
 
             numberOfTrials++;
+            LOGGER.debug("numberOfTrials = " + numberOfTrials);
         } while (!isPartyWon() && numberOfTrials != getMaxNumberOfTrials());
+        LOGGER.debug("maxNumberOfTrials = " + getMaxNumberOfTrials());
+        LOGGER.info("runGame method finished");
     }
 
 }
