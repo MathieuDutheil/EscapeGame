@@ -5,7 +5,7 @@ public class EscapeGameApp {
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(EscapeGameApp.class);
 
     public static void main(String[] args) {
-        LOGGER.trace("App started");
+        LOGGER.info("App started");
         int restart;
         do {
             int gameMode = Utilities.askAnInt("À quels modes du jeu souhaitez-vous jouer ? (1 : Challenger, 2 : Défenseur, 3 : Duel)", 0, 3);
@@ -29,6 +29,8 @@ public class EscapeGameApp {
             }
             while (restart == 1);
         } while (restart == 2);
+        LOGGER.info("App terminated");
     }
+
 }
 

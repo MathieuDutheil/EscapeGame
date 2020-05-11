@@ -28,8 +28,10 @@ public abstract class AbstractGame {
             LOGGER.info("propertyLoaded = " + propertyLoaded);
         }
         minRange = new int[lengthCombination];
+        LOGGER.debug("minRange = " + Arrays.toString(minRange));
         maxRange = new int[lengthCombination];
         Arrays.fill(maxRange, 9);
+        LOGGER.debug("maxRange = " + Arrays.toString(maxRange));
     }
 
 
@@ -46,6 +48,7 @@ public abstract class AbstractGame {
     void loadProperties() {
         LOGGER.trace("method loadProperties started");
         String path = new File("src/config.properties").getAbsolutePath();
+        LOGGER.debug("path = " + path);
         System.out.println(path);
 
         final Properties prop = new Properties();
@@ -124,7 +127,7 @@ public abstract class AbstractGame {
     }
 
     String compareGuessWithCombination(String guess, String secret, String playerName) {
-
+        LOGGER.trace("method compareGuessWithCombination started");
         String clue = "";
         int nbGoodResponses = 0;
         for (int i = 0; i < lengthCombination; i++) {
@@ -140,12 +143,16 @@ public abstract class AbstractGame {
                 nbGoodResponses++;
             }
         }
+        LOGGER.debug("clue = " + clue);
+        LOGGER.debug("nbGoodResponses = " + nbGoodResponses);
         System.out.println(clue);
         if (nbGoodResponses == lengthCombination) {
             System.out.println("Bravo " + playerName + " a découvert la combinaison de son adversaire.");
             partyWon = true;
+            LOGGER.debug("partyWon = " + partyWon);
         }
 
+        LOGGER.trace("method compareGuessWithCombination finished");
         return clue;
 
     }
