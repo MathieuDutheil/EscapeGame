@@ -189,6 +189,7 @@ public abstract class AbstractGame {
         }
         if (developerMode) {
             System.out.println("Combinaison = " + nextComputerCombination);
+            //voir pour implémenter LOGGER ici
         }
 
         LOGGER.debug("nextComputerCombination = " + nextComputerCombination);

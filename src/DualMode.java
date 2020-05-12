@@ -4,7 +4,7 @@ public class DualMode extends AbstractGame {
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(AbstractGame.class);
     @Override
     public void runGame() {
-
+        LOGGER.info("runGame method started");
         System.out.println("Vous avez choisi le mode : Duel, vous allez devoir trouver la combinaison secrète de l'ordinateur avant qu'il ne devine la votre.");
         String playerCombination = getPlayerCombination("Quelle combinaison secrète choisissez-vous ?");
         System.out.println("L'Ordinateur choisit une combinaison.");
@@ -12,7 +12,6 @@ public class DualMode extends AbstractGame {
         String playerGuess = "";
         String clue = "";
         String computerGuess = computerCombination;
-
 
         do {
 
@@ -26,8 +25,7 @@ public class DualMode extends AbstractGame {
                 updateRange(computerGuess, clue);
                 computerGuess = generateNextComputerCombination();
             }
-
-
         } while (!isPartyWon());
+        LOGGER.info("runGame method finished");
     }
 }
