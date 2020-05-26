@@ -8,10 +8,17 @@ import java.util.Scanner;
 
 public abstract class AbstractGame {
 
+
+    // Variable
+    private Players whoIsToPlay;
+    private StateOfTheGame stateOfTheGame;
+    private WhatIsAsked whatIsAsked;
     private static boolean propertyLoaded = false;
     private static int lengthCombination = 4;
     private static int maxNumberOfTrials = 5;
     private static boolean developerMode = false;
+    private int numberOfTrials = 0;
+    private String computerCombination = "";
     private Scanner sc = new Scanner(System.in);
     private final int[] minRange;
     private final int[] maxRange;
@@ -21,6 +28,7 @@ public abstract class AbstractGame {
     private final static int MIN_NUMBER_OF_TRIALS = 3;
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(AbstractGame.class);
 
+    // Constructor
     public AbstractGame() {
         if (!propertyLoaded) {
             loadProperties();
@@ -32,15 +40,56 @@ public abstract class AbstractGame {
         maxRange = new int[lengthCombination];
         Arrays.fill(maxRange, 9);
         LOGGER.debug("maxRange = " + Arrays.toString(maxRange));
+        stateOfTheGame = StateOfTheGame.START;
     }
 
-
+    // Getter
     public boolean isPartyWon() {
         return partyWon;
     }
 
     protected int getMaxNumberOfTrials() {
         return maxNumberOfTrials;
+    }
+
+    public Players getWhoIsToPlay() {
+        return whoIsToPlay;
+    }
+
+    public StateOfTheGame getStateOfTheGame() {
+        return stateOfTheGame;
+    }
+
+    public int getNumberOfTrials() {
+        return numberOfTrials;
+    }
+
+    public WhatIsAsked getWhatIsAsked() {
+        return whatIsAsked;
+    }
+    public String getComputerCombination() {
+        return computerCombination;
+    }
+
+    // Setter
+    protected void setComputerCombination(String computerCombination) {
+        this.computerCombination = computerCombination;
+    }
+
+    protected void setStateOfTheGame(StateOfTheGame stateOfTheGame) {
+        this.stateOfTheGame = stateOfTheGame;
+    }
+
+    public void setWhoIsToPlay(Players whoIsToPlay) {
+        this.whoIsToPlay = whoIsToPlay;
+    }
+
+    public void setNumberOfTrials(int numberOfTrials) {
+        this.numberOfTrials = numberOfTrials;
+    }
+
+    public void setWhatIsAsked(WhatIsAsked whatIsAsked) {
+        this.whatIsAsked = whatIsAsked;
     }
 
     public abstract void runGame();
@@ -55,35 +104,43 @@ public abstract class AbstractGame {
 
         try (InputStream input = new FileInputStream(path)) {
 
-            prop.load(input);
-
             try {
-                int checkLengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
-                if (checkLengthCombination >= MIN_LENGTH_COMBINATION && checkLengthCombination <= MAX_LENGTH_COMBINATION) {
-                    lengthCombination = checkLengthCombination;
-                    LOGGER.debug("lengthCombination = " + lengthCombination);
+
+                prop.load(input);
+
+                try {
+                    int checkLengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
+                    if (checkLengthCombination >= MIN_LENGTH_COMBINATION && checkLengthCombination <= MAX_LENGTH_COMBINATION) {
+                        lengthCombination = checkLengthCombination;
+                        LOGGER.debug("lengthCombination = " + lengthCombination);
+                    }
+                } catch (NumberFormatException ex) {
+                    LOGGER.warn(ex.toString());
+                    LOGGER.debug("lengthCombination put to default value = " + lengthCombination);
                 }
-            } catch (NumberFormatException ex) {
+
+                try {
+                    int checkNumberOfTrials = Integer.parseInt(prop.getProperty("MAX_NUMBER_OF_TRIALS"));
+                    if (checkNumberOfTrials >= MIN_NUMBER_OF_TRIALS) {
+                        maxNumberOfTrials = checkNumberOfTrials;
+                        LOGGER.debug("maxNumberOfTrials = " + maxNumberOfTrials);
+                    }
+                } catch (NumberFormatException ex) {
+                    LOGGER.warn(ex.toString());
+                    LOGGER.debug("maxNumberOfTrials put to default value = " + maxNumberOfTrials);
+
+                }
+
+                developerMode = Boolean.parseBoolean(prop.getProperty("DEVELOPER_MODE"));
+                LOGGER.debug("developerMode = " + developerMode);
+            } catch (FileNotFoundException ex) {
                 LOGGER.warn(ex.toString());
                 LOGGER.debug("lengthCombination put to default value = " + lengthCombination);
-            }
-
-            try {
-                int checkNumberOfTrials = Integer.parseInt(prop.getProperty("MAX_NUMBER_OF_TRIALS"));
-                if (checkNumberOfTrials >= MIN_NUMBER_OF_TRIALS) {
-                    maxNumberOfTrials = checkNumberOfTrials;
-                    LOGGER.debug("maxNumberOfTrials = " + maxNumberOfTrials);
-                }
-            } catch (NumberFormatException ex) {
-                LOGGER.warn(ex.toString());
                 LOGGER.debug("maxNumberOfTrials put to default value = " + maxNumberOfTrials);
+                LOGGER.debug("developerMode put to default value = " + developerMode);
 
             }
-
-            developerMode = Boolean.parseBoolean(prop.getProperty("DEVELOPER_MODE"));
-            LOGGER.debug("developerMode = " + developerMode);
-
-        } catch (IOException ex) {  // suffisant ou séparer avec FileNotFoundException ?
+        } catch (IOException ex) {
             LOGGER.error(ex.toString());
             LOGGER.debug("lengthCombination put to default value = " + lengthCombination);
             LOGGER.debug("maxNumberOfTrials put to default value = " + maxNumberOfTrials);
@@ -106,7 +163,7 @@ public abstract class AbstractGame {
         return playerCombination;
     }
 
-    private boolean isCombinationCorrect(String combination) {
+    boolean isCombinationCorrect(String combination) {
         LOGGER.trace("method isCombinationCorrect started");
         LOGGER.debug("combination = " + combination);
         if (combination.length() != lengthCombination) {
@@ -190,6 +247,7 @@ public abstract class AbstractGame {
         if (developerMode) {
             System.out.println("Combinaison = " + nextComputerCombination);
             //voir pour implémenter LOGGER ici
+            //voir comment virer le System.out
         }
 
         LOGGER.debug("nextComputerCombination = " + nextComputerCombination);
@@ -197,7 +255,65 @@ public abstract class AbstractGame {
         return nextComputerCombination;
     }
 
+
+    public enum Players {
+        PLAYER("joueur"), COMPUTER("ordinateur");
+        private String name = "";
+
+        Players(String name) {
+            this.name = name;
+        } //name et toString inutile pour l'instant
+
+        public String toString() {
+            return name;
+        }
+    }
+
+    public enum StateOfTheGame {
+        START, RUN, END, CLOSE_GAME
+    }
+
+    public enum WhatIsAsked {
+        COMBINATION, NULL
+    }
+
+    public abstract Players whoIsToPlay();
+
+    public abstract String computerTurn();
+
+    public abstract String playerTurn();
+
+    public abstract String whatToDoWithAsk(String ask);
+
+
+
+
+    String compareGuessWithCombination(String guess, String secret) {
+
+        String clue = "";
+        int nbGoodResponses = 0;
+        for (int i = 0; i < lengthCombination; i++) {
+
+            if (guess.charAt(i) < secret.charAt(i)) {
+                clue += "+";
+
+            } else if (guess.charAt(i) > secret.charAt(i)) {
+                clue += "-";
+
+            } else {
+                clue += "=";
+                nbGoodResponses++;
+            }
+        }
+
+        if (nbGoodResponses == lengthCombination) {
+            partyWon = true;
+            stateOfTheGame = StateOfTheGame.END;
+        }
+        return clue;
+    }
 }
+
 
 
 
