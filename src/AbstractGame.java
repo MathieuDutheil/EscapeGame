@@ -54,36 +54,44 @@ public abstract class AbstractGame {
         final Properties prop = new Properties();
 
         try (InputStream input = new FileInputStream(path)) {
-
-            prop.load(input);
-
             try {
-                int checkLengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
-                if (checkLengthCombination >= MIN_LENGTH_COMBINATION && checkLengthCombination <= MAX_LENGTH_COMBINATION) {
-                    lengthCombination = checkLengthCombination;
-                    LOGGER.debug("lengthCombination = " + lengthCombination);
+
+
+                prop.load(input);
+
+                try {
+                    int checkLengthCombination = Integer.parseInt(prop.getProperty("LENGTH_COMBINATION"));
+                    if (checkLengthCombination >= MIN_LENGTH_COMBINATION && checkLengthCombination <= MAX_LENGTH_COMBINATION) {
+                        lengthCombination = checkLengthCombination;
+                        LOGGER.debug("lengthCombination = " + lengthCombination);
+                    }
+                } catch (NumberFormatException ex) {
+                    LOGGER.warn(ex.toString());
+                    LOGGER.debug("lengthCombination put to default value = " + lengthCombination);
                 }
-            } catch (NumberFormatException ex) {
+
+                try {
+                    int checkNumberOfTrials = Integer.parseInt(prop.getProperty("MAX_NUMBER_OF_TRIALS"));
+                    if (checkNumberOfTrials >= MIN_NUMBER_OF_TRIALS) {
+                        maxNumberOfTrials = checkNumberOfTrials;
+                        LOGGER.debug("maxNumberOfTrials = " + maxNumberOfTrials);
+                    }
+                } catch (NumberFormatException ex) {
+                    LOGGER.warn(ex.toString());
+                    LOGGER.debug("maxNumberOfTrials put to default value = " + maxNumberOfTrials);
+
+                }
+
+                developerMode = Boolean.parseBoolean(prop.getProperty("DEVELOPER_MODE"));
+                LOGGER.debug("developerMode = " + developerMode);
+            } catch (FileNotFoundException ex) {
                 LOGGER.warn(ex.toString());
                 LOGGER.debug("lengthCombination put to default value = " + lengthCombination);
-            }
-
-            try {
-                int checkNumberOfTrials = Integer.parseInt(prop.getProperty("MAX_NUMBER_OF_TRIALS"));
-                if (checkNumberOfTrials >= MIN_NUMBER_OF_TRIALS) {
-                    maxNumberOfTrials = checkNumberOfTrials;
-                    LOGGER.debug("maxNumberOfTrials = " + maxNumberOfTrials);
-                }
-            } catch (NumberFormatException ex) {
-                LOGGER.warn(ex.toString());
                 LOGGER.debug("maxNumberOfTrials put to default value = " + maxNumberOfTrials);
+                LOGGER.debug("developerMode put to default value = " + developerMode);
 
             }
-
-            developerMode = Boolean.parseBoolean(prop.getProperty("DEVELOPER_MODE"));
-            LOGGER.debug("developerMode = " + developerMode);
-
-        } catch (IOException ex) {  // suffisant ou séparer avec FileNotFoundException ?
+        } catch (IOException ex) {
             LOGGER.error(ex.toString());
             LOGGER.debug("lengthCombination put to default value = " + lengthCombination);
             LOGGER.debug("maxNumberOfTrials put to default value = " + maxNumberOfTrials);
