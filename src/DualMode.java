@@ -28,4 +28,24 @@ public class DualMode extends AbstractGame {
         } while (!isPartyWon());
         LOGGER.info("runGame method finished");
     }
+
+    @Override
+    public Players whoIsToPlay() {
+        return null;
+    }
+
+    @Override
+    public String computerTurn() {
+        return null;
+    }
+
+    @Override
+    public String playerTurn() {
+        return null;
+    }
+
+    @Override
+    public String whatToDoWithAsk(String ask) {
+        return null;
+    }
 }
