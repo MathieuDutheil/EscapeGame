@@ -10,9 +10,10 @@ public abstract class AbstractGame {
 
 
     // Variable
-    private Players whoIsToPlay;
-    private StateOfTheGame stateOfTheGame;
-    private WhatIsAsked whatIsAsked;
+
+    private Enum.Players whoIsToPlay;
+    private Enum.StateOfTheGame stateOfTheGame;
+    private Enum.WhatIsAsked whatIsAsked;
     private static boolean propertyLoaded = false;
     private static int lengthCombination = 4;
     private static int maxNumberOfTrials = 5;
@@ -40,7 +41,7 @@ public abstract class AbstractGame {
         maxRange = new int[lengthCombination];
         Arrays.fill(maxRange, 9);
         LOGGER.debug("maxRange = " + Arrays.toString(maxRange));
-        stateOfTheGame = StateOfTheGame.START;
+        stateOfTheGame = Enum.StateOfTheGame.START;
     }
 
     // Getter
@@ -52,11 +53,11 @@ public abstract class AbstractGame {
         return maxNumberOfTrials;
     }
 
-    public Players getWhoIsToPlay() {
+    public Enum.Players getWhoIsToPlay() {
         return whoIsToPlay;
     }
 
-    public StateOfTheGame getStateOfTheGame() {
+    public Enum.StateOfTheGame getStateOfTheGame() {
         return stateOfTheGame;
     }
 
@@ -64,7 +65,7 @@ public abstract class AbstractGame {
         return numberOfTrials;
     }
 
-    public WhatIsAsked getWhatIsAsked() {
+    public Enum.WhatIsAsked getWhatIsAsked() {
         return whatIsAsked;
     }
     public String getComputerCombination() {
@@ -76,11 +77,11 @@ public abstract class AbstractGame {
         this.computerCombination = computerCombination;
     }
 
-    protected void setStateOfTheGame(StateOfTheGame stateOfTheGame) {
+    protected void setStateOfTheGame(Enum.StateOfTheGame stateOfTheGame) {
         this.stateOfTheGame = stateOfTheGame;
     }
 
-    public void setWhoIsToPlay(Players whoIsToPlay) {
+    public void setWhoIsToPlay(Enum.Players whoIsToPlay) {
         this.whoIsToPlay = whoIsToPlay;
     }
 
@@ -88,7 +89,7 @@ public abstract class AbstractGame {
         this.numberOfTrials = numberOfTrials;
     }
 
-    public void setWhatIsAsked(WhatIsAsked whatIsAsked) {
+    public void setWhatIsAsked(Enum.WhatIsAsked whatIsAsked) {
         this.whatIsAsked = whatIsAsked;
     }
 
@@ -255,33 +256,11 @@ public abstract class AbstractGame {
         return nextComputerCombination;
     }
 
-
-    public enum Players {
-        PLAYER("joueur"), COMPUTER("ordinateur");
-        private String name = "";
-
-        Players(String name) {
-            this.name = name;
-        } //name et toString inutile pour l'instant
-
-        public String toString() {
-            return name;
-        }
-    }
-
-    public enum StateOfTheGame {
-        START, RUN, END, CLOSE_GAME
-    }
-
-    public enum WhatIsAsked {
-        COMBINATION, NULL
-    }
-
-    public abstract Players whoIsToPlay();
+    public abstract Enum.Players whoIsToPlay();
 
     public abstract String computerTurn();
 
-    public abstract String playerTurn();
+    public abstract String playerPrompt();
 
     public abstract String whatToDoWithAsk(String ask);
 
@@ -308,7 +287,7 @@ public abstract class AbstractGame {
 
         if (nbGoodResponses == lengthCombination) {
             partyWon = true;
-            stateOfTheGame = StateOfTheGame.END;
+            stateOfTheGame = Enum.StateOfTheGame.END;
         }
         return clue;
     }

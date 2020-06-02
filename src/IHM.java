@@ -27,18 +27,18 @@ public class IHM {
                 }
 
                 do {
-                    System.out.println(game.getStateOfTheGame());
-                    game.whoIsToPlay();
-                    System.out.println(game.getWhoIsToPlay());
-                    if (game.getWhoIsToPlay() == AbstractGame.Players.COMPUTER) {
-                        System.out.println(game.computerTurn());
+                    switch(game.whoIsToPlay()) {
+                        case COMPUTER:
+                            System.out.println(game.computerTurn());
+                            break;
+                        case PLAYER:
+                            System.out.println(game.playerPrompt());
+                            break;
 
-                    } else if (game.getWhoIsToPlay() == AbstractGame.Players.PLAYER) {
-                        //playerIntro
-                        System.out.println(game.playerTurn());
+                    }
 
                         //ask
-                        if (game.getWhatIsAsked() == AbstractGame.WhatIsAsked.COMBINATION) {
+                        if (game.getWhatIsAsked() == Enum.WhatIsAsked.COMBINATION) {
                             String combinationAsked = "";
                             do {
                                 combinationAsked = sc.nextLine();
@@ -48,8 +48,8 @@ public class IHM {
                             System.out.println(game.whatToDoWithAsk(combinationAsked));
                         }
 
-                    }
-                } while (!(game.getStateOfTheGame() == AbstractGame.StateOfTheGame.CLOSE_GAME));
+
+                } while (!(game.getStateOfTheGame() == Enum.StateOfTheGame.CLOSE_GAME));
 
                 restart = Utilities.askAnInt("Voulez-vous : 1 - Rejouer au même mode, 2 - Lancer un autre mode, 3 - Quitter l'application.", 1, 3);
             } while (restart == 1);

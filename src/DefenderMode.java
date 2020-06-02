@@ -44,7 +44,7 @@ public class DefenderMode extends AbstractGame {
     }
 
     @Override
-    public String playerTurn() {
+    public String playerPrompt() {
         return null;
     }
 
