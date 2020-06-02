@@ -16,12 +16,12 @@ public class DualMode extends AbstractGame {
         do {
 
             playerGuess = getPlayerCombination("À votre tour de tenter de deviner la combinaison secrète de l'ordinateur. Votre proposition ?");
-            compareGuessWithCombination(playerGuess, computerCombination, "le Joueur");
+            //compareGuessWithCombination(playerGuess, computerCombination, "le Joueur");
 
             if (!isPartyWon()) {
                 System.out.println("L'Ordinateur a choisi : " + computerGuess);
                 System.out.println("combinaison joueur = " + playerCombination);
-                clue = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
+               // clue = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
                 updateRange(computerGuess, clue);
                 computerGuess = generateNextComputerCombination();
             }
@@ -30,7 +30,7 @@ public class DualMode extends AbstractGame {
     }
 
     @Override
-    public Players whoIsToPlay() {
+    public Enum.Players whoIsToPlay() {
         return null;
     }
 
@@ -45,7 +45,12 @@ public class DualMode extends AbstractGame {
     }
 
     @Override
-    public String whatToDoWithAsk(String ask) {
+    public String playerTurn(String ask) {
+        return null;
+    }
+
+    @Override
+    public String endMessage() {
         return null;
     }
 }

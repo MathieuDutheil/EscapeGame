@@ -18,7 +18,7 @@ public class DefenderMode extends AbstractGame {
         do {
             computerGuess = generateNextComputerCombination();
             System.out.println("L'Ordinateur a choisi : " + computerGuess);
-            clue = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
+           // clue = compareGuessWithCombination(computerGuess, playerCombination, "l'Ordinateur");
             updateRange(computerGuess, clue);
             try {
                 Thread.sleep(1000);
@@ -34,7 +34,7 @@ public class DefenderMode extends AbstractGame {
     }
 
     @Override
-    public Players whoIsToPlay() {
+    public Enum.Players whoIsToPlay() {
         return null;
     }
 
@@ -49,7 +49,12 @@ public class DefenderMode extends AbstractGame {
     }
 
     @Override
-    public String whatToDoWithAsk(String ask) {
+    public String playerTurn(String ask) {
+        return null;
+    }
+
+    @Override
+    public String endMessage() {
         return null;
     }
 
