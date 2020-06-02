@@ -8,9 +8,7 @@ import java.util.Scanner;
 
 public abstract class AbstractGame {
 
-
     // Variable
-
     private Enum.Players whoIsToPlay;
     private Enum.StateOfTheGame stateOfTheGame;
     private Enum.WhatIsAsked whatIsAsked;
@@ -68,6 +66,7 @@ public abstract class AbstractGame {
     public Enum.WhatIsAsked getWhatIsAsked() {
         return whatIsAsked;
     }
+
     public String getComputerCombination() {
         return computerCombination;
     }
@@ -92,8 +91,6 @@ public abstract class AbstractGame {
     public void setWhatIsAsked(Enum.WhatIsAsked whatIsAsked) {
         this.whatIsAsked = whatIsAsked;
     }
-
-    public abstract void runGame();
 
     void loadProperties() {
         LOGGER.trace("method loadProperties started");
@@ -151,93 +148,36 @@ public abstract class AbstractGame {
         LOGGER.trace("method loadProperties finished");
     }
 
-    String getPlayerCombination(String intro) {
-        LOGGER.trace("method getPlayerCombination started");
-        String playerCombination = "";
-        do {
-            System.out.println(intro);
-            playerCombination = sc.nextLine();
+    //Abstract Method
+    public abstract Enum.Players whoIsToPlay();
 
-        } while (!isCombinationCorrect(playerCombination));
-        LOGGER.debug("playerCombination = " + playerCombination);
-        LOGGER.trace("method getPlayerCombination finished");
-        return playerCombination;
-    }
+    public abstract String computerTurn();
 
-    boolean isCombinationCorrect(String combination) {
+    public abstract String playerPrompt();
+
+    public abstract String playerTurn(String ask) throws CombinationIncorrectException;
+
+    public abstract String endMessage();
+
+    boolean isCombinationCorrect(String combination) throws CombinationIncorrectException {
         LOGGER.trace("method isCombinationCorrect started");
         LOGGER.debug("combination = " + combination);
         if (combination.length() != lengthCombination) {
-            System.out.println("Attention votre saisie doit être de " + lengthCombination + " caractères.");
             LOGGER.warn("combination's length is not good = " + combination.length() + ", lengthCombination = " + lengthCombination);
-            return false;
+            throw new CombinationIncorrectException("Attention votre saisie doit être de " + lengthCombination + " caractères.");
         }
 
         for (int i = 0; i < combination.length(); i++) {
             char c = combination.charAt(i);
             if (c < '0' || c > '9') {
-                System.out.println("Attention votre  caractère n°" + (i + 1) + " n'est pas un chiffre.");
                 LOGGER.warn("character n°" + (i + 1) + " is not a number = " + combination.charAt(i));
-                return false;
+                throw new CombinationIncorrectException("Attention votre  caractère n°" + (i + 1) + " n'est pas un chiffre.");
             }
         }
         LOGGER.trace("method isCombinationCorrect finished");
         return true;
     }
 
-    String compareGuessWithCombination(String guess, String secret, String playerName) {
-        LOGGER.trace("method compareGuessWithCombination started");
-        LOGGER.debug("guess = " + guess + ", secret = " + secret);
-        String clue = "";
-        int nbGoodResponses = 0;
-        for (int i = 0; i < lengthCombination; i++) {
-
-            if (guess.charAt(i) < secret.charAt(i)) {
-                clue += "+";
-
-            } else if (guess.charAt(i) > secret.charAt(i)) {
-                clue += "-";
-
-            } else {
-                clue += "=";
-                nbGoodResponses++;
-            }
-        }
-        LOGGER.debug("clue = " + clue);
-        LOGGER.debug("nbGoodResponses = " + nbGoodResponses);
-        System.out.println(clue);
-        if (nbGoodResponses == lengthCombination) {
-            System.out.println("Bravo " + playerName + " a découvert la combinaison de son adversaire.");
-            partyWon = true;
-            LOGGER.debug("partyWon = " + partyWon);
-        }
-
-        LOGGER.trace("method compareGuessWithCombination finished");
-        return clue;
-
-    }
-
-
-    void updateRange(String oldGuess, String indication) {
-        LOGGER.trace("method updateRange started");
-        LOGGER.debug("oldGuess = " + oldGuess + " ,indication = " + indication);
-        for (int i = 0; i < lengthCombination; i++) {
-            if (indication.charAt(i) == '+') {
-                minRange[i] = ((oldGuess.charAt(i) - '0') + 1);
-
-            } else if (indication.charAt(i) == '-') {
-                maxRange[i] = ((oldGuess.charAt(i) - '0') - 1);
-
-            } else if (indication.charAt(i) == '=') {
-                minRange[i] = (oldGuess.charAt(i) - '0');
-                maxRange[i] = (oldGuess.charAt(i) - '0');
-
-            }
-        }
-        LOGGER.debug("minRange = " + Arrays.toString(minRange));
-        LOGGER.debug("maxRange = " + Arrays.toString(maxRange));
-        LOGGER.trace("method updateRange finished");
-    }
 
     String generateNextComputerCombination() {
         LOGGER.trace("method generateNextComputerCombination started");
@@ -255,16 +195,6 @@ public abstract class AbstractGame {
         LOGGER.trace("method generateNextComputerCombination finished");
         return nextComputerCombination;
     }
-
-    public abstract Enum.Players whoIsToPlay();
-
-    public abstract String computerTurn();
-
-    public abstract String playerPrompt();
-
-    public abstract String whatToDoWithAsk(String ask);
-
-
 
 
     String compareGuessWithCombination(String guess, String secret) {
@@ -290,6 +220,43 @@ public abstract class AbstractGame {
             stateOfTheGame = Enum.StateOfTheGame.END;
         }
         return clue;
+    }
+
+    void updateRange(String oldGuess, String indication) {
+        LOGGER.trace("method updateRange started");
+        LOGGER.debug("oldGuess = " + oldGuess + " ,indication = " + indication);
+        for (int i = 0; i < lengthCombination; i++) {
+            if (indication.charAt(i) == '+') {
+                minRange[i] = ((oldGuess.charAt(i) - '0') + 1);
+
+            } else if (indication.charAt(i) == '-') {
+                maxRange[i] = ((oldGuess.charAt(i) - '0') - 1);
+
+            } else if (indication.charAt(i) == '=') {
+                minRange[i] = (oldGuess.charAt(i) - '0');
+                maxRange[i] = (oldGuess.charAt(i) - '0');
+
+            }
+        }
+        LOGGER.debug("minRange = " + Arrays.toString(minRange));
+        LOGGER.debug("maxRange = " + Arrays.toString(maxRange));
+        LOGGER.trace("method updateRange finished");
+    }
+
+
+    public abstract void runGame();
+
+    String getPlayerCombination(String intro) {
+        LOGGER.trace("method getPlayerCombination started");
+        String playerCombination = "";
+        //   do {
+        System.out.println(intro);
+        playerCombination = sc.nextLine();
+
+        // } while (!isCombinationCorrect(playerCombination));
+        LOGGER.debug("playerCombination = " + playerCombination);
+        LOGGER.trace("method getPlayerCombination finished");
+        return playerCombination;
     }
 }
 
