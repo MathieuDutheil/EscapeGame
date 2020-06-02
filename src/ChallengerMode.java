@@ -40,17 +40,11 @@ public class ChallengerMode extends AbstractGame {
         String whatToSay = "";
         if (getStateOfTheGame() == Enum.StateOfTheGame.RUN) {
             whatToSay = "Essayer de deviner la combinaison secrète de l'ordinateur. Votre proposition ?";
-            setWhatIsAsked(Enum.WhatIsAsked.COMBINATION);
+
             if (isDeveloperMode()) {
                 String newLine = System.getProperty("line.separator");
                 whatToSay += newLine + "Le mode développeur est activé, la combinaison secrète de l'ordinateur est " + getComputerCombination();
             }
-
-
-        } else if (getStateOfTheGame() == Enum.StateOfTheGame.END) {
-            setWhatIsAsked(Enum.WhatIsAsked.NULL);
-            setStateOfTheGame(Enum.StateOfTheGame.CLOSE_GAME);
-
         }
         return whatToSay;
     }
@@ -72,7 +66,7 @@ public class ChallengerMode extends AbstractGame {
         if (isPartyWon()) {
             endMessage = "Bravo vous avez découvert la combinaison de l'ordinateur.";
         } else if (getNumberOfTrials() == getMaxNumberOfTrials()) {
-            endMessage = "Vous avez perdu. Vous avez dépassé le nombre d'essai possible.";
+            endMessage = "Vous avez perdu. Vous avez atteint le nombre d'essai maximum possible.";
         }
         return endMessage;
     }
@@ -86,7 +80,7 @@ public class ChallengerMode extends AbstractGame {
         int numberOfTrials = 0; //Done
         LOGGER.debug("numberOfTrials = " + numberOfTrials);
         do {
-            String challengerPlayerCombination = getPlayerCombination("Essayer de deviner la combinaison secrète de l'ordinateur. Votre proposition ?");
+            //String challengerPlayerCombination = getPlayerCombination("Essayer de deviner la combinaison secrète de l'ordinateur. Votre proposition ?");
             //compareGuessWithCombination(challengerPlayerCombination, computerCombination, "le Joueur");
             numberOfTrials++;
             LOGGER.debug("numberOfTrials = " + numberOfTrials);

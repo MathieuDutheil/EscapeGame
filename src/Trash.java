@@ -31,5 +31,18 @@ public class Trash {
         return clue;
 
     }
+
+        String getPlayerCombination(String intro) {
+        LOGGER.trace("method getPlayerCombination started");
+        String playerCombination = "";
+        //   do {
+        System.out.println(intro);
+        playerCombination = sc.nextLine();
+
+        // } while (!isCombinationCorrect(playerCombination));
+        LOGGER.debug("playerCombination = " + playerCombination);
+        LOGGER.trace("method getPlayerCombination finished");
+        return playerCombination;
+    }
     */
 }
