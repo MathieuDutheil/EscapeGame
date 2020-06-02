@@ -37,20 +37,16 @@ public class IHM {
 
                         case PLAYER:
                             System.out.println(game.playerPrompt());
+                            String combinationAsked = "";
+                            combinationAsked = sc.nextLine();
+                            try {
+                                System.out.println(game.playerTurn(combinationAsked));
+                            } catch (CombinationIncorrectException ex) {
+                                LOGGER.error(ex.toString());
+                                System.out.println(ex.getMessage());
+                            }
                             break;
                     }
-
-                    if (game.getWhatIsAsked() == Enum.WhatIsAsked.COMBINATION) {                      // switch bon choix ?
-                        String combinationAsked = "";
-                        combinationAsked = sc.nextLine();
-                        try {
-                            System.out.println(game.playerTurn(combinationAsked));
-                        } catch (CombinationIncorrectException ex) {
-                            LOGGER.error(ex.toString());
-                            System.out.println(ex.getMessage());
-                        }
-                    }
-
                 } while (!(game.getStateOfTheGame() == Enum.StateOfTheGame.END));
 
                 System.out.println(game.endMessage());

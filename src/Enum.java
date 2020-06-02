@@ -5,10 +5,7 @@ public class Enum {
     }
 
     public enum StateOfTheGame {
-        START, RUN, END, CLOSE_GAME
+        START, RUN, END
     }
 
-    public enum WhatIsAsked {
-        COMBINATION, NULL
-    }
 }

@@ -11,13 +11,13 @@ public abstract class AbstractGame {
     // Variable
     private Enum.Players whoIsToPlay;
     private Enum.StateOfTheGame stateOfTheGame;
-    private Enum.WhatIsAsked whatIsAsked;
     private static boolean propertyLoaded = false;
     private static int lengthCombination = 4;
     private static int maxNumberOfTrials = 5;
     private static boolean developerMode = false;
     private int numberOfTrials = 0;
     private String computerCombination = "";
+    private String playerCombination = "";
     private Scanner sc = new Scanner(System.in);
     private final int[] minRange;
     private final int[] maxRange;
@@ -63,16 +63,15 @@ public abstract class AbstractGame {
         return numberOfTrials;
     }
 
-    public Enum.WhatIsAsked getWhatIsAsked() {
-        return whatIsAsked;
-    }
-
     public String getComputerCombination() {
         return computerCombination;
     }
 
     public static boolean isDeveloperMode() {
         return developerMode;
+    }
+    public String getPlayerCombination() {
+        return playerCombination;
     }
 
     // Setter
@@ -92,8 +91,8 @@ public abstract class AbstractGame {
         this.numberOfTrials = numberOfTrials;
     }
 
-    public void setWhatIsAsked(Enum.WhatIsAsked whatIsAsked) {
-        this.whatIsAsked = whatIsAsked;
+    public void setPlayerCombination(String playerCombination) {
+        this.playerCombination = playerCombination;
     }
 
     void loadProperties() {
@@ -189,11 +188,6 @@ public abstract class AbstractGame {
         for (int i = 0; i < lengthCombination; i++) {
             nextComputerCombination += Utilities.getRandomNumberInRange(minRange[i], maxRange[i]);
         }
-        if (developerMode) {
-            System.out.println("Combinaison = " + nextComputerCombination);
-            //voir pour implémenter LOGGER ici
-            //voir comment virer le System.out
-        }
 
         LOGGER.debug("nextComputerCombination = " + nextComputerCombination);
         LOGGER.trace("method generateNextComputerCombination finished");
@@ -250,18 +244,7 @@ public abstract class AbstractGame {
 
     public abstract void runGame();
 
-    String getPlayerCombination(String intro) {
-        LOGGER.trace("method getPlayerCombination started");
-        String playerCombination = "";
-        //   do {
-        System.out.println(intro);
-        playerCombination = sc.nextLine();
 
-        // } while (!isCombinationCorrect(playerCombination));
-        LOGGER.debug("playerCombination = " + playerCombination);
-        LOGGER.trace("method getPlayerCombination finished");
-        return playerCombination;
-    }
 }
 
 
