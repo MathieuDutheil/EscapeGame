@@ -41,6 +41,10 @@ public class ChallengerMode extends AbstractGame {
         if (getStateOfTheGame() == Enum.StateOfTheGame.RUN) {
             whatToSay = "Essayer de deviner la combinaison secrète de l'ordinateur. Votre proposition ?";
             setWhatIsAsked(Enum.WhatIsAsked.COMBINATION);
+            if (isDeveloperMode()) {
+                String newLine = System.getProperty("line.separator");
+                whatToSay += newLine + "Le mode développeur est activé, la combinaison secrète de l'ordinateur est " + getComputerCombination();
+            }
 
 
         } else if (getStateOfTheGame() == Enum.StateOfTheGame.END) {
