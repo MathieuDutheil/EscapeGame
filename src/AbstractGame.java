@@ -71,6 +71,10 @@ public abstract class AbstractGame {
         return computerCombination;
     }
 
+    public static boolean isDeveloperMode() {
+        return developerMode;
+    }
+
     // Setter
     protected void setComputerCombination(String computerCombination) {
         this.computerCombination = computerCombination;
