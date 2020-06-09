@@ -3,10 +3,11 @@ import org.apache.log4j.Logger;
 public class ChallengerMode extends AbstractGame {
 
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(ChallengerMode.class);
-
+    private int numberOfTrials;
 
     public ChallengerMode() {
         setComputerCombination(generateNextComputerCombination());
+        numberOfTrials = 0;
     }
 
     @Override
@@ -53,8 +54,8 @@ public class ChallengerMode extends AbstractGame {
     public String playerTurn(String playerGuessCombination) throws CombinationIncorrectException {
         isCombinationCorrect(playerGuessCombination);
         String whatToDisplay = compareGuessWithCombination(playerGuessCombination, getComputerCombination());
-        setNumberOfTrials(getNumberOfTrials() + 1);
-        if (getNumberOfTrials() == getMaxNumberOfTrials()) {
+        numberOfTrials++;
+        if (numberOfTrials == getMaxNumberOfTrials()) {
             setStateOfTheGame(Enum.StateOfTheGame.END);
         }
         return whatToDisplay;
@@ -72,22 +73,7 @@ public class ChallengerMode extends AbstractGame {
     }
 
 
-    @Override
-    public void runGame() {
-        LOGGER.info("runGame method started");
-        System.out.println("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");//Done
-        String computerCombination = generateNextComputerCombination();//Done
-        int numberOfTrials = 0; //Done
-        LOGGER.debug("numberOfTrials = " + numberOfTrials);
-        do {
-            //String challengerPlayerCombination = getPlayerCombination("Essayer de deviner la combinaison secrète de l'ordinateur. Votre proposition ?");
-            //compareGuessWithCombination(challengerPlayerCombination, computerCombination, "le Joueur");
-            numberOfTrials++;
-            LOGGER.debug("numberOfTrials = " + numberOfTrials);
-        } while (!isPartyWon() && numberOfTrials != getMaxNumberOfTrials());
-        LOGGER.debug("maxNumberOfTrials = " + getMaxNumberOfTrials());
-        LOGGER.info("runGame method finished");
-    }
+
 
 
 }
