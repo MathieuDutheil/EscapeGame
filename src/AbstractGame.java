@@ -87,10 +87,6 @@ public abstract class AbstractGame {
         this.whoIsToPlay = whoIsToPlay;
     }
 
-    public void setNumberOfTrials(int numberOfTrials) {
-        this.numberOfTrials = numberOfTrials;
-    }
-
     public void setPlayerCombination(String playerCombination) {
         this.playerCombination = playerCombination;
     }
@@ -242,7 +238,7 @@ public abstract class AbstractGame {
     }
 
 
-    public abstract void runGame();
+
 
 
 }
