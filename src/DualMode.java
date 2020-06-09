@@ -63,9 +63,11 @@ public class DualMode extends AbstractGame {
     @Override
     public String playerPrompt() {
         String whatToSay = "";
+        String newLine = System.getProperty("line.separator");
         switch (getStateOfTheGame()) {
+
             case START:
-                String newLine = System.getProperty("line.separator");
+
                 whatToSay = "Vous avez choisi le mode : Duel, vous allez devoir trouver la combinaison secrète de l'ordinateur avant qu'il ne devine la votre.";
                 whatToSay += newLine + "Déterminons qui commencera la partie.";
                 whatToSay += newLine + "Le lancer de pièce a donné " + draw + ".";
@@ -78,7 +80,11 @@ public class DualMode extends AbstractGame {
                 whatToSay += newLine + "Quelle combinaison secrète choisissez-vous ?";
                 break;
             case RUN:
+
                 whatToSay = "À votre tour de tenter de deviner la combinaison secrète de l'ordinateur. Votre proposition ?";
+                if (isDeveloperMode()) {
+                    whatToSay += newLine + "Le mode développeur est activé, la combinaison secrète de l'ordinateur est " + getComputerCombination();
+                }
                 break;
         }
 
