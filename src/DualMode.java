@@ -2,61 +2,63 @@ import org.apache.log4j.Logger;
 
 public class DualMode extends AbstractGame {
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(AbstractGame.class);
-    private static int draw;
-    private static boolean isRunStarted;
+    private final static int NB_PLAYERS = 2;
+    private final Enum.Players[] playersOrder = new Enum.Players[NB_PLAYERS];
+    private int indexPlayer;
+    String newLine = System.getProperty("line.separator");
 
     public DualMode() {
+        indexPlayer = 0;
         setComputerCombination(generateNextComputerCombination());
-        draw = Utilities.getRandomNumberInRange(0, 1);
-        System.out.println(draw);
-        isRunStarted = false;
+        String startMessageBuild = "Vous avez choisi le mode : Duel, vous allez devoir trouver la combinaison secrète de l'ordinateur avant qu'il ne devine la votre.";
+        switch (Utilities.getRandomNumberInRange(0, 1)) {
+            case 0:
+                playersOrder[0] = Enum.Players.PLAYER;
+                playersOrder[1] = Enum.Players.COMPUTER;
+                startMessageBuild += newLine + "C'est le Joueur qui commencera à deviner.";
+                break;
+
+            default:
+                playersOrder[0] = Enum.Players.COMPUTER;
+                playersOrder[1] = Enum.Players.PLAYER;
+                startMessageBuild += newLine + "C'est l'ordinateur qui commencera à deviner.";
+                break;
+        }
+        setStartMessage(startMessageBuild);
+
     }
 
     @Override
-    public Enum.Players whoIsToPlay() {
+    public Enum.Players getWhoIsToPlay() {
+        indexPlayer = indexPlayer % NB_PLAYERS;
 
-        switch (getStateOfTheGame()) {
-            case START:
-                setWhoIsToPlay(Enum.Players.PLAYER);
-                break;
-
-            case RUN:
-                if (!isRunStarted) {
-                    if (draw == 0) {
-                        setWhoIsToPlay(Enum.Players.PLAYER);
-                        isRunStarted = true;
-                    } else if (draw == 1) {
-                        setWhoIsToPlay(Enum.Players.COMPUTER);
-                        isRunStarted = true;
-                    }
-                } else {
-                    switch (getWhoIsToPlay()) {
-                        case PLAYER:
-                            setWhoIsToPlay(Enum.Players.COMPUTER);
-                            break;
-                        case COMPUTER:
-                            setWhoIsToPlay(Enum.Players.PLAYER);
-                            break;
-                    }
-                }
-                break;
-        }
-        return getWhoIsToPlay();
+        return playersOrder[indexPlayer];
     }
+
 
     @Override
     public String computerTurn() {
         String whatToSay = "";
         String computerGuess = "";
         String clue = "";
-        if (getStateOfTheGame() == Enum.StateOfTheGame.RUN) {
-            computerGuess = generateNextComputerCombination();
-            whatToSay = "L'ordinateur a choisi : " + computerGuess;
-            clue = compareGuessWithCombination(computerGuess, getPlayerCombination());
-            String newLine = System.getProperty("line.separator");
-            whatToSay += newLine + clue;
-            updateRange(computerGuess, clue);
+        switch (getStateOfTheGame()) {
+
+            case START:
+                if (playersOrder[1] == Enum.Players.COMPUTER) {
+                    whatToSay = "L'ordinateur a choisi une combinaison secrète.";
+                    setStateOfTheGame(Enum.StateOfTheGame.RUN);
+                }
+                break;
+
+            case RUN:
+                computerGuess = generateNextComputerCombination();
+                whatToSay = "L'ordinateur tente de deviner votre combinaison. Il choisit : " + computerGuess + ".";
+                clue = compareGuessWithCombination(computerGuess, getPlayerCombination());
+                whatToSay += newLine + clue;
+                updateRange(computerGuess, clue);
+                break;
         }
+        indexPlayer++;
         return whatToSay;
     }
 
@@ -67,16 +69,7 @@ public class DualMode extends AbstractGame {
         switch (getStateOfTheGame()) {
 
             case START:
-
-                whatToSay = "Vous avez choisi le mode : Duel, vous allez devoir trouver la combinaison secrète de l'ordinateur avant qu'il ne devine la votre.";
-                whatToSay += newLine + "Déterminons qui commencera la partie.";
-                whatToSay += newLine + "Le lancer de pièce a donné " + draw + ".";
-                if (draw == 0) {
-                    whatToSay += newLine + "C'est le Joueur qui commencera à deviner.";
-                } else {
-                    whatToSay += newLine + "C'est l'ordinteur qui commencera à deviner.";
-                }
-                whatToSay += newLine + "L'ordinateur choisit une combinaison.";
+                whatToSay += newLine + "L'ordinateur a choisi une combinaison.";
                 whatToSay += newLine + "Quelle combinaison secrète choisissez-vous ?";
                 break;
             case RUN:
@@ -99,31 +92,32 @@ public class DualMode extends AbstractGame {
             case START:
                 isCombinationCorrect(playerCombination);
                 setPlayerCombination(playerCombination);
-                whatToDisplay = "Commençons la partie.";
-                setStateOfTheGame(Enum.StateOfTheGame.RUN);
+                whatToDisplay = "Vous avez choisi comme combinaison secrète : " + playerCombination + ".";
+                if (playersOrder[1] == Enum.Players.PLAYER) {
+                    setStateOfTheGame(Enum.StateOfTheGame.RUN);
+                }
                 break;
             case RUN:
                 isCombinationCorrect(playerCombination);
                 whatToDisplay = compareGuessWithCombination(playerCombination, getComputerCombination());
                 break;
         }
-
+        indexPlayer++;
         return whatToDisplay;
     }
 
     @Override
-    public String endMessage() {
-        String endMessage = "";
-        switch (whoIsToPlay()) {
+    public void endMessage() {
+
+        switch (getWhoIsToPlay()) {
             case COMPUTER:
-                endMessage = "Bravo l'ordinateur a découvert la combinaison du joueur.";
+                setEndMessage("Bravo l'ordinateur a découvert la combinaison du joueur.");
                 break;
             case PLAYER:
-                endMessage = "Bravo vous avez découvert la combinaison de l'ordinateur.";
+                setEndMessage("Bravo vous avez découvert la combinaison de l'ordinateur.");
         }
-        return endMessage;
-    }
 
+    }
 
 
 }

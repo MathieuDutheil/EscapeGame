@@ -6,33 +6,20 @@ public class DefenderMode extends AbstractGame {
     private int numberOfTrials;
 
     public DefenderMode() {
+        setStartMessage("Vous avez choisi le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.");
         numberOfTrials = 0;
+        setWhoIsToPlay(Enum.Players.PLAYER);
     }
 
 
-    @Override
-    public Enum.Players whoIsToPlay() {
 
-        switch (getStateOfTheGame()) {
-            case START:
-                setWhoIsToPlay(Enum.Players.PLAYER);
-                break;
-
-            case RUN:
-                setWhoIsToPlay(Enum.Players.COMPUTER);
-                break;
-        }
-
-        return getWhoIsToPlay();
-    }
 
     @Override
     public String playerPrompt() {
         String whatToSay = "";
         if (getStateOfTheGame() == Enum.StateOfTheGame.START) {
-            whatToSay = "Vous avez choisi le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.";
-            String newLine = System.getProperty("line.separator");
-            whatToSay += newLine + "Quelle combinaison choisissez-vous ?";
+
+            whatToSay = "Quelle combinaison choisissez-vous ?";
         }
         return whatToSay;
     }
@@ -42,6 +29,7 @@ public class DefenderMode extends AbstractGame {
         isCombinationCorrect(playerCombination);
         setPlayerCombination(playerCombination);
         setStateOfTheGame(Enum.StateOfTheGame.RUN);
+        setWhoIsToPlay(Enum.Players.COMPUTER);
         return "L'ordinateur va maintenant essayer de deviner votre combinaison secrète.";
     }
 
@@ -62,6 +50,7 @@ public class DefenderMode extends AbstractGame {
             numberOfTrials++;
         }
         if (numberOfTrials == getMaxNumberOfTrials()) {
+            endMessage();
             setStateOfTheGame(Enum.StateOfTheGame.END);
         }
         try {
@@ -74,14 +63,14 @@ public class DefenderMode extends AbstractGame {
 
 
     @Override
-    public String endMessage() {
-        String endMessage = "";
+    public void endMessage() {
+
         if (isPartyWon()) {
-            endMessage = "Bravo l'ordinateur a découvert la combinaison du joueur.";
-        } else if (getNumberOfTrials() == getMaxNumberOfTrials()) {
-            endMessage = "L'ordinateur a perdu. Il a atteint le nombre d'essai maximum possible.";
+            setEndMessage("Bravo l'ordinateur a découvert la combinaison du joueur.");
+        } else if (numberOfTrials == getMaxNumberOfTrials()) {
+            setEndMessage("L'ordinateur a perdu. Il a atteint le nombre d'essai maximum possible.");
         }
-        return endMessage;
+
     }
 
 

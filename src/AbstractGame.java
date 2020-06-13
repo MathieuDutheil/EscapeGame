@@ -1,10 +1,9 @@
 import org.apache.log4j.Logger;
 
 import java.io.*;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Properties;
-import java.util.Scanner;
-
 
 public abstract class AbstractGame {
 
@@ -15,10 +14,8 @@ public abstract class AbstractGame {
     private static int lengthCombination = 4;
     private static int maxNumberOfTrials = 5;
     private static boolean developerMode = false;
-    private int numberOfTrials = 0;
     private String computerCombination = "";
     private String playerCombination = "";
-    private Scanner sc = new Scanner(System.in);
     private final int[] minRange;
     private final int[] maxRange;
     private boolean partyWon = false;
@@ -26,6 +23,8 @@ public abstract class AbstractGame {
     private final static int MAX_LENGTH_COMBINATION = 10;
     private final static int MIN_NUMBER_OF_TRIALS = 3;
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(AbstractGame.class);
+    private String startMessage = "";
+    private String endMessage = "";
 
     // Constructor
     public AbstractGame() {
@@ -51,27 +50,32 @@ public abstract class AbstractGame {
         return maxNumberOfTrials;
     }
 
-    public Enum.Players getWhoIsToPlay() {
+    public String getStartMessage() {
+        return startMessage;
+    }
+
+    protected Enum.Players getWhoIsToPlay() {
         return whoIsToPlay;
     }
 
-    public Enum.StateOfTheGame getStateOfTheGame() {
+    protected Enum.StateOfTheGame getStateOfTheGame() {
         return stateOfTheGame;
     }
 
-    public int getNumberOfTrials() {
-        return numberOfTrials;
-    }
-
-    public String getComputerCombination() {
+    protected String getComputerCombination() {
         return computerCombination;
     }
 
     public static boolean isDeveloperMode() {
         return developerMode;
     }
+
     public String getPlayerCombination() {
         return playerCombination;
+    }
+
+    public String getEndMessage() {
+        return endMessage;
     }
 
     // Setter
@@ -83,23 +87,28 @@ public abstract class AbstractGame {
         this.stateOfTheGame = stateOfTheGame;
     }
 
-    public void setWhoIsToPlay(Enum.Players whoIsToPlay) {
+    protected void setStartMessage(String startMessage) {
+        this.startMessage = startMessage;
+    }
+
+    protected void setWhoIsToPlay(Enum.Players whoIsToPlay) {
         this.whoIsToPlay = whoIsToPlay;
     }
 
-    public void setPlayerCombination(String playerCombination) {
+    protected void setPlayerCombination(String playerCombination) {
         this.playerCombination = playerCombination;
+    }
+
+    public void setEndMessage(String endMessage) {
+        this.endMessage = endMessage;
     }
 
     void loadProperties() {
         LOGGER.trace("method loadProperties started");
-        String path = new File("src/config.properties").getAbsolutePath();
-        LOGGER.debug("path = " + path);
-        System.out.println(path);
 
         final Properties prop = new Properties();
 
-        try (InputStream input = new FileInputStream(path)) {
+        try (InputStream input = getClass().getResourceAsStream("config.properties")) {
 
             try {
 
@@ -148,7 +157,6 @@ public abstract class AbstractGame {
     }
 
     //Abstract Method
-    public abstract Enum.Players whoIsToPlay();
 
     public abstract String computerTurn();
 
@@ -156,7 +164,7 @@ public abstract class AbstractGame {
 
     public abstract String playerTurn(String ask) throws CombinationIncorrectException;
 
-    public abstract String endMessage();
+    public abstract void endMessage();
 
     boolean isCombinationCorrect(String combination) throws CombinationIncorrectException {
         LOGGER.trace("method isCombinationCorrect started");
@@ -211,6 +219,7 @@ public abstract class AbstractGame {
 
         if (nbGoodResponses == lengthCombination) {
             partyWon = true;
+            endMessage();
             stateOfTheGame = Enum.StateOfTheGame.END;
         }
         return clue;
@@ -236,9 +245,6 @@ public abstract class AbstractGame {
         LOGGER.debug("maxRange = " + Arrays.toString(maxRange));
         LOGGER.trace("method updateRange finished");
     }
-
-
-
 
 
 }
