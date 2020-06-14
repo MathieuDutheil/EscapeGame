@@ -1,4 +1,5 @@
 import org.apache.log4j.Logger;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -9,12 +10,16 @@ public class Utilities {
 
     public static int getRandomNumberInRange(int min, int max) {
         LOGGER.trace("method getRandomNumberInRange started");
+        LOGGER.debug("min = " + min + " ,max = " + max);
         if (min > max) {
-            max = min;
+            int oldMin = min;
             min = max;
+            max = oldMin;
+            LOGGER.debug("min = " + min + " ,max = " + max);
         }
 
         if (min == max) {
+            LOGGER.debug("min = " + min + " ,max = " + max);
             LOGGER.trace("method getRandomNumberInRange terminated : min = max");
             return max;
         }
