@@ -8,15 +8,17 @@ public class Utilities {
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(Utilities.class);
 
     public static int getRandomNumberInRange(int min, int max) {
-
+        LOGGER.trace("method getRandomNumberInRange started");
         if (min > max) {
-            throw new IllegalArgumentException("max must be greater than min");
+            max = min;
+            min = max;
         }
 
         if (min == max) {
+            LOGGER.trace("method getRandomNumberInRange terminated : min = max");
             return max;
         }
-
+        LOGGER.trace("method getRandomNumberInRange terminated");
         return (int) (Math.random() * ((max - min) + 1)) + min;
     }
 
