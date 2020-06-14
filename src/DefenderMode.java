@@ -6,9 +6,11 @@ public class DefenderMode extends AbstractGame {
     private int numberOfTrials;
 
     public DefenderMode() {
+        LOGGER.info("DefenderMode's constructor started");
         setStartMessage("Vous avez choisi le mode Défenseur, l'ordinateur va devoir deviner votre combinaison secrète.");
         numberOfTrials = 0;
         setWhoIsToPlay(Enum.Players.PLAYER);
+        LOGGER.info("DefenderMode's constructor terminated");
     }
 
 

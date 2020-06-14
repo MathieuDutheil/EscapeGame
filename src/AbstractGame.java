@@ -1,7 +1,6 @@
 import org.apache.log4j.Logger;
 
 import java.io.*;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -26,8 +25,8 @@ public abstract class AbstractGame {
     private String startMessage = "";
     private String endMessage = "";
 
-    // Constructor
     public AbstractGame() {
+        LOGGER.info("AbstractGame's constructor started");
         if (!propertyLoaded) {
             loadProperties();
             propertyLoaded = true;
@@ -39,70 +38,120 @@ public abstract class AbstractGame {
         Arrays.fill(maxRange, 9);
         LOGGER.debug("maxRange = " + Arrays.toString(maxRange));
         stateOfTheGame = Enum.StateOfTheGame.START;
+        LOGGER.debug("stateOfTheGame = " + stateOfTheGame);
+        LOGGER.info("AbstractGame's constructor terminated");
     }
 
     // Getter
     public boolean isPartyWon() {
+        LOGGER.trace("Getter isPartyWon started");
+        LOGGER.debug("partyWon = " + partyWon);
+        LOGGER.trace("Getter isPartyWon started");
         return partyWon;
     }
 
     protected int getMaxNumberOfTrials() {
+        LOGGER.trace("Getter getMaxNumberOfTrials started");
+        LOGGER.debug("maxNumberOfTrials = " + maxNumberOfTrials);
+        LOGGER.trace("Getter getMaxNumberOfTrials started");
         return maxNumberOfTrials;
     }
 
     public String getStartMessage() {
+        LOGGER.trace("Getter getStartMessage started");
+        LOGGER.debug("startMessage = " + startMessage);
+        LOGGER.trace("Getter getStartMessage terminated");
         return startMessage;
     }
 
     protected Enum.Players getWhoIsToPlay() {
+        LOGGER.trace("Getter getWhoIsToPlay started");
+        LOGGER.debug("whoIsToPlay = " + whoIsToPlay);
+        LOGGER.trace("Getter getWhoIsToPlay terminated");
         return whoIsToPlay;
     }
 
     protected Enum.StateOfTheGame getStateOfTheGame() {
+        LOGGER.trace("Getter getStateOfTheGame started");
+        LOGGER.debug("stateOfTheGame = " + stateOfTheGame);
+        LOGGER.trace("Getter getStateOfTheGame terminated");
         return stateOfTheGame;
     }
 
     protected String getComputerCombination() {
+        LOGGER.trace("Getter getComputerCombination started");
+        LOGGER.debug("computerCombination = " + computerCombination);
+        LOGGER.trace("Getter getComputerCombination terminated");
         return computerCombination;
     }
 
-    public static boolean isDeveloperMode() {
+    public boolean isDeveloperMode() {
+        LOGGER.trace("Getter isDeveloperMode started");
+        LOGGER.debug("developerMode = " + developerMode);
+        LOGGER.trace("Getter isDeveloperMode terminated");
         return developerMode;
     }
 
     public String getPlayerCombination() {
+        LOGGER.trace("Getter getPlayerCombination started");
+        LOGGER.debug("playerCombination = " + playerCombination);
+        LOGGER.trace("Getter getPlayerCombination terminated");
         return playerCombination;
     }
 
     public String getEndMessage() {
+        LOGGER.trace("Getter getEndMessage started");
+        LOGGER.debug("endMessage = " + endMessage);
+        LOGGER.trace("Getter getEndMessage terminated");
         return endMessage;
     }
 
     // Setter
     protected void setComputerCombination(String computerCombination) {
+        LOGGER.trace("Setter setComputerCombination started");
         this.computerCombination = computerCombination;
+        LOGGER.debug("computerCombination = " + computerCombination);
+        LOGGER.trace("Setter setComputerCombination terminated");
     }
 
     protected void setStateOfTheGame(Enum.StateOfTheGame stateOfTheGame) {
+        LOGGER.trace("Setter setStateOfTheGame started");
         this.stateOfTheGame = stateOfTheGame;
+        LOGGER.debug("stateOfTheGame = " + stateOfTheGame);
+        LOGGER.trace("Setter setStateOfTheGame terminated");
     }
 
     protected void setStartMessage(String startMessage) {
+
+        LOGGER.trace("Setter setStartMessage started");
         this.startMessage = startMessage;
+        LOGGER.debug("startMessage = " + startMessage);
+        LOGGER.trace("Setter setStartMessage terminated");
     }
 
     protected void setWhoIsToPlay(Enum.Players whoIsToPlay) {
+        LOGGER.trace("Setter setWhoIsToPlay started");
         this.whoIsToPlay = whoIsToPlay;
+        LOGGER.debug("whoIsToPlay = " + whoIsToPlay);
+        LOGGER.trace("Setter setWhoIsToPlay terminated");
     }
 
     protected void setPlayerCombination(String playerCombination) {
+        LOGGER.trace("Setter setPlayerCombination started");
         this.playerCombination = playerCombination;
+        LOGGER.debug("playerCombination = " + playerCombination);
+        LOGGER.trace("Setter setPlayerCombination terminated");
     }
 
     public void setEndMessage(String endMessage) {
+
+        LOGGER.trace("Setter setEndMessage started");
         this.endMessage = endMessage;
+        LOGGER.debug("endMessage = " + endMessage);
+        LOGGER.trace("Setter setEndMessage terminated");
     }
 
+    //loadProperties
     void loadProperties() {
         LOGGER.trace("method loadProperties started");
 
@@ -166,6 +215,7 @@ public abstract class AbstractGame {
 
     public abstract void endMessage();
 
+    //Method
     boolean isCombinationCorrect(String combination) throws CombinationIncorrectException {
         LOGGER.trace("method isCombinationCorrect started");
         LOGGER.debug("combination = " + combination);
@@ -185,8 +235,7 @@ public abstract class AbstractGame {
         return true;
     }
 
-
-    String generateNextComputerCombination() {
+    protected String generateNextComputerCombination() {
         LOGGER.trace("method generateNextComputerCombination started");
         String nextComputerCombination = "";
         for (int i = 0; i < lengthCombination; i++) {
@@ -199,8 +248,9 @@ public abstract class AbstractGame {
     }
 
 
-    String compareGuessWithCombination(String guess, String secret) {
-
+    protected String compareGuessWithCombination(String guess, String secret) {
+        LOGGER.trace("method compareGuessWithCombination started");
+        LOGGER.debug("guess = " + guess + " ,secret = " + secret);
         String clue = "";
         int nbGoodResponses = 0;
         for (int i = 0; i < lengthCombination; i++) {
@@ -216,16 +266,20 @@ public abstract class AbstractGame {
                 nbGoodResponses++;
             }
         }
-
+        LOGGER.debug("clue = " + clue);
+        LOGGER.debug("nbGoodResponses = " + nbGoodResponses);
         if (nbGoodResponses == lengthCombination) {
             partyWon = true;
+            LOGGER.debug("partyWon = " + partyWon);
             endMessage();
             stateOfTheGame = Enum.StateOfTheGame.END;
+            LOGGER.debug("stateOfTheGame = " + stateOfTheGame);
         }
+        LOGGER.trace("method compareGuessWithCombination terminated");
         return clue;
     }
 
-    void updateRange(String oldGuess, String indication) {
+    protected void updateRange(String oldGuess, String indication) {
         LOGGER.trace("method updateRange started");
         LOGGER.debug("oldGuess = " + oldGuess + " ,indication = " + indication);
         for (int i = 0; i < lengthCombination; i++) {

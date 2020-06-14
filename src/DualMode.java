@@ -8,6 +8,7 @@ public class DualMode extends AbstractGame {
     String newLine = System.getProperty("line.separator");
 
     public DualMode() {
+        LOGGER.info("DualMode's constructor started");
         indexPlayer = 0;
         setComputerCombination(generateNextComputerCombination());
         String startMessageBuild = "Vous avez choisi le mode : Duel, vous allez devoir trouver la combinaison secrète de l'ordinateur avant qu'il ne devine la votre.";
@@ -25,7 +26,7 @@ public class DualMode extends AbstractGame {
                 break;
         }
         setStartMessage(startMessageBuild);
-
+        LOGGER.info("DualMode's constructor terminated");
     }
 
     @Override

@@ -6,11 +6,13 @@ public class ChallengerMode extends AbstractGame {
     private int numberOfTrials;
 
     public ChallengerMode() {
-        this.setStartMessage("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
+        LOGGER.info("ChallengerMode's constructor started");
+        setStartMessage("Vous avez choisi le mode Challenger, vous allez devoir deviner la combinaison secrète généré par l'ordinateur.");
         setComputerCombination(generateNextComputerCombination());
         numberOfTrials = 0;
         setStateOfTheGame(Enum.StateOfTheGame.RUN);
         setWhoIsToPlay(Enum.Players.PLAYER);
+        LOGGER.info("ChallengerMode's constructor terminated");
     }
 
 
