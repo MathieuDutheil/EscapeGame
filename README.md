@@ -30,8 +30,11 @@
 <p>Utilisez la commande cd suivie de l'arborescence et du nom du répertoire où vous avez enregistré votre code source.</p>
 <p>Si vous êtes positionné dans le répertoire C:\Users et que vous voulez aller vous placer dans C:\Users\votre_nom\Projet\Titan, vous devrez entrer cd\Users\votre_nom\Projet\Titan puis presser la touche Entrée. Pensez à remplacer votre_nom par votre nom réel de connexion.</p>
 <p>Vous pourrez afficher le contenu du répertoire où vous vous trouvez en tapant la commande dir(sous Windows) ou ls(sous Mac) suivie d'une pression sur la touche Entrée.</p>
-
 </li>
+
+<li>Télécharger <a href="http://mirrors.standaloneinstaller.com/apache/logging/log4j/1.2.17/log4j-1.2.17.zip">Log4j</a> et placer log4j-1.2.17.jar (contenu dans le zip) dans EscapeGame-master/src </li>
+<li>Taper la commande</li>
+
 </ol>
 
 
