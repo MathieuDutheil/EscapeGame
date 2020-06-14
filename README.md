@@ -8,16 +8,20 @@
 <p>Vous pouvez tout aussi bien le compiler et l'exécuter depuis la console de commande de votre système.</p>
 <p>Merci de suivre les étapes suivantes :</p>
 </li>
+
 <ol>
-<p>
 <li>Téléchargez le code source du programme. Mémorisez le nom du dossier où vous enregistrez le programme.
 <p><a href="https://github.com/MathieuDutheil/EscapeGame/archive/master.zip">Lien GitHub pour télécharger.</a></p>
-<li></li>
 </li>
 
-
-<li>Ouvrez une console de commande.</li>
+<li>Ouvrez une console de commande.
 <p>Sous Windows : pressez la touche Démarrer puis saisissez cmd dans la barre d'exécution qui est affichée. Pressez ensuite la touche Entrée pour ouvrir la console de commande.</p>
+<p>Sous Mac : Faites Pomme + R et rechercher Terminal. Pressez ensuite la touche Entrée pour ouvrir le Terminal</p>
+</li>
+
+<li>Vérifiez si Java est installé sur votre ordinateur.
+<p>Saisissez java -version puis pressez la touche Entrée dans votre console de commande.</p>
+<p>Si l'environnement Java est installé, vous verrez s'afficher un message vous indiquant quelle est sa version active.</p>
 
 
 </li>
