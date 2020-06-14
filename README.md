@@ -22,7 +22,14 @@
 <li>Vérifiez si Java est installé sur votre ordinateur.
 <p>Saisissez java -version puis pressez la touche Entrée dans votre console de commande.</p>
 <p>Si l'environnement Java est installé, vous verrez s'afficher un message vous indiquant quelle est sa version active.</p>
+<p>S'il n'est pas installé sur votre ordinateur, vous pourrez télécharger gratuitement l'environnement de développement et d'exécution (Java JDK) <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">depuis le site web d'Oracle</a> et l'installer.</p>
+<p>Pensez à <a href="https://www.java.com/fr/download/help/path.xml">configurer le "path"</a></p>
+</li>
 
+<li>Placez-vous dans le dossier où est enregistré votre code source.
+<p>Utilisez la commande cd suivie de l'arborescence et du nom du répertoire où vous avez enregistré votre code source.</p>
+<p>Si vous êtes positionné dans le répertoire C:\Users et que vous voulez aller vous placer dans C:\Users\votre_nom\Projet\Titan, vous devrez entrer cd\Users\votre_nom\Projet\Titan puis presser la touche Entrée. Pensez à remplacer votre_nom par votre nom réel de connexion.</p>
+<p>Vous pourrez afficher le contenu du répertoire où vous vous trouvez en tapant la commande dir(sous Windows) ou ls(sous Mac) suivie d'une pression sur la touche Entrée.</p>
 
 </li>
 </ol>
