@@ -12,9 +12,11 @@
 
 
 <ol>
-<li>Téléchargez le code source du programme.
+<li>Téléchargez le code source du programme. Mémorisez le nom du dossier où vous enregistrez le programme.
+<p><a href="https://github.com/MathieuDutheil/EscapeGame/archive/master.zip">Lien GitHub pour télécharger.</a></p>
 </li>
-<p></p>
+
+
 <li>
 </li>
 </ol>
