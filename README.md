@@ -12,8 +12,9 @@
 
 
 <ol>
-<li>
+<li>Téléchargez le code source du programme.
 </li>
+<p></p>
 <li>
 </li>
 </ol>
