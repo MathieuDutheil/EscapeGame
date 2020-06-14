@@ -27,6 +27,13 @@ public abstract class AbstractGame {
 
     public AbstractGame() {
         LOGGER.info("AbstractGame's constructor started");
+        LOGGER.debug("propertyLoaded = " + propertyLoaded);
+        LOGGER.debug("lengthCombination = " + lengthCombination);
+        LOGGER.debug("maxNumberOfTrials = " + maxNumberOfTrials);
+        LOGGER.debug("developerMode = " + developerMode);
+        LOGGER.debug("MIN_LENGTH_COMBINATION = " + MIN_LENGTH_COMBINATION);
+        LOGGER.debug("MAX_LENGTH_COMBINATION = " + MAX_LENGTH_COMBINATION);
+        LOGGER.debug("MIN_NUMBER_OF_TRIALS = " + MIN_NUMBER_OF_TRIALS);
         if (!propertyLoaded) {
             loadProperties();
             propertyLoaded = true;
