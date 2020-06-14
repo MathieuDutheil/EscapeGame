@@ -33,14 +33,16 @@
 </li>
 
 <li>Télécharger <a href="http://mirrors.standaloneinstaller.com/apache/logging/log4j/1.2.17/log4j-1.2.17.zip">Log4j</a> et placer log4j-1.2.17.jar (contenu dans le zip) dans EscapeGame-master/src </li>
-<li>Taper la commande</li>
+<li>Taper la commande </li>
 
 </ol>
 
 
 
 
-javac -cp log4j-1.2.17.jar *.java
+javac -cp log4j-1.2.17.jar EscapeGameApp.java
 export CLASSPATH=$CLASSPATH:/HD/Users/Mathieu/Desktop/EscapeGameApp/EscapeGame-master/src/log4j-1.2.17.jar
 javac -cp log4j-1.2.17.jar *.java
 http://mirrors.standaloneinstaller.com/apache/logging/log4j/1.2.17/log4j-1.2.17.zip
+java -classpath .\bin;.\lib\log4j-1.2.17.jar EscapeGameApp
+java -cp log4j-1.2.17.jar EscapeGameApp

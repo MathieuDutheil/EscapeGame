@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class IHM {
     private static Scanner sc = new Scanner(System.in);
     private static final org.apache.log4j.Logger LOGGER = Logger.getLogger(IHM.class);
-    
+
     public void runIHM() {
         LOGGER.info("runIHM started");
         int restart;
