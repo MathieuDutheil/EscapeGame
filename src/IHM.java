@@ -15,7 +15,6 @@ public class IHM {
                 AbstractGame game;
                 switch (gameMode) {
                     case 1:
-
                         game = new ChallengerMode();
                         break;
                     case 2:

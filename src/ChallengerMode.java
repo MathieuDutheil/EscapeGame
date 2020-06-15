@@ -62,7 +62,7 @@ public class ChallengerMode extends AbstractGame {
         if (isPartyWon()) {
             setEndMessage("Bravo vous avez découvert la combinaison de l'ordinateur.");
         } else if (numberOfTrials == getMaxNumberOfTrials()) {
-            setEndMessage("Vous avez perdu. Vous avez atteint le nombre d'essai maximum possible.");
+            setEndMessage("Vous avez perdu. Vous avez atteint le nombre d'essai maximum possible. La combinaison de l'ordinateur était " + getComputerCombination()+".");
         }
         LOGGER.trace("method endMessage terminated");
     }

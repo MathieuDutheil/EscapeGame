@@ -128,7 +128,7 @@ public class DualMode extends AbstractGame {
         LOGGER.trace("method endMessage started");
         switch (getWhoIsToPlay()) {
             case COMPUTER:
-                setEndMessage("Bravo l'ordinateur a découvert la combinaison du joueur.");
+                setEndMessage("Bravo l'ordinateur a découvert la combinaison du joueur. Sa combinaison secrète était " + getComputerCombination() + ".");
                 break;
             case PLAYER:
                 setEndMessage("Bravo vous avez découvert la combinaison de l'ordinateur.");

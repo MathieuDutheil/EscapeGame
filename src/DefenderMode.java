@@ -80,12 +80,10 @@ public class DefenderMode extends AbstractGame {
         if (isPartyWon()) {
             setEndMessage("Bravo l'ordinateur a découvert la combinaison du joueur.");
         } else if (numberOfTrials == getMaxNumberOfTrials()) {
-            setEndMessage("L'ordinateur a perdu. Il a atteint le nombre d'essai maximum possible.");
+            setEndMessage("L'ordinateur a perdu. Il a atteint le nombre d'essai maximum possible. La combinaison secrète était " + getPlayerCombination() + ".");
         }
         LOGGER.trace("method endMessage terminated");
     }
-
-
 
 
 }

@@ -6,7 +6,6 @@ public class EscapeGameApp {
 
     public static void main(String[] args) {
         LOGGER.info("App started");
-
         IHM escapeGameApp = new IHM();
         escapeGameApp.runIHM();
         LOGGER.info("App terminated");
