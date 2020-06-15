@@ -35,7 +35,7 @@
 <li>Télécharger <a href="http://mirrors.standaloneinstaller.com/apache/logging/log4j/1.2.17/log4j-1.2.17.zip">Log4j</a> et placer log4j-1.2.17.jar (contenu dans le zip) dans EscapeGame-master/src </li>
 <li><p>Sous Mac : taper la commande dans le terminal suivante : javac -cp "log4j-1.2.17.jar:." EscapeGameApp.java </p>
 <p>Sous Windows : taper la commande dans la console de commande : javac -cp "log4j-1.2.17.jar;." EscapeGameApp.java</p>
-<p>De nouveaux fichiers .class devrait apparaître dans le dossier.</p></li>
+<p>De nouveaux fichiers .class devraient apparaître dans le dossier.</p></li>
 <li><p>Sous Mac : taper la commande dans le terminal suivante : java -cp "log4j-1.2.17.jar:." EscapeGameApp </p>
     <p>Sous Windows : taper la commande dans la console de commande : java -cp "log4j-1.2.17.jar;." EscapeGameApp</p></li>
 <p>Le jeu  se lance. Bonne partie.</p>
